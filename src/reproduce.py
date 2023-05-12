@@ -13,7 +13,7 @@ logging.set_verbosity_error()
 from PIL import Image
 
 import sys
-sys.path.append('/home/lcur1679/fromage/ours/DL2_project') ##change this to your folder where you put the whole project
+sys.path.append('/home/lcur1679/fromage/final/src') ##change this to your folder where you put the whole project
 
 from fromage import models
 from fromage import utils
@@ -115,7 +115,7 @@ def __main__():
 
     print("-- Loading data:")
     # Load VIST dataset for experiment
-    file_path = 'VIST_expriment.json'
+    file_path = 'VIST_data_for_experiments.json'
     with open(file_path, 'r') as f:
         VIST_data = json.load(f)
     print(f"-- Finish loading | {len(VIST_data)} stories")

@@ -1,0 +1,86 @@
+Using HuggingFace AutoFeatureExtractor for openai/clip-vit-large-patch14.
+/home/lcur1679/anaconda3/envs/dl2/lib/python3.11/site-packages/transformers/models/clip/feature_extraction_clip.py:28: FutureWarning: The class CLIPFeatureExtractor is deprecated and will be removed in version 5 of Transformers. Please use CLIPImageProcessor instead.
+  warnings.warn(
+Using facebook/opt-6.7b for the language model.
+Using openai/clip-vit-large-patch14 for the visual model with 1 visual tokens.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:10<00:10, 10.03s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:12<00:00,  5.55s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:12<00:00,  6.22s/it]
+Freezing the LM.
+Initializing embedding for the retrieval token [RET] (id = 50266).
+Restoring pretrained weights for the visual model.
+Freezing the VM.
+True
+-- Loading data:
+-- Finish loading | 5055 stories
+--- Experiment ongoing - caption1 without images...
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+Not enough images
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+Not enough images
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+Not enough images
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+Not enough images
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
+URL invalid
