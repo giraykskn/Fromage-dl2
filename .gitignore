@@ -1,0 +1,20 @@
+# Ignore Python byte-compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Python environment directories
+venv/
+env/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# Ignore log files
+*.log
+
+# Ignore embeddings
+src/fromage_model/cc3m_embeddings.pkl
