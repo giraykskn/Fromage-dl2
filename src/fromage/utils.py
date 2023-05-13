@@ -30,6 +30,14 @@ def get_image_from_url(url: str):
     return img
 
 
+def get_image_from_jpg(path: str):
+  # response = requests.get(path)
+  img = Image.open(path)
+  img = img.resize((224, 224))
+  img = img.convert('RGB')
+  return img
+
+
 def truncate_caption(caption: str) -> str:
   """Truncate captions at periods and newlines."""
   caption = caption.strip('\n')

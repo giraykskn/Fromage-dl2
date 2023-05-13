@@ -47,54 +47,62 @@ def generate_output(model, open_ended_data: list, shot: int = 1, recall: int = 1
 
     sample_examples = 500
     path = 'datasets/open_ended_mi/'
-    for i in range(sample_examples):
+    prompts = []
+    for i in range(1):
         if shot == 1:
-            prompts = [open_ended_data[i]['caption_1'], open_ended_data[i]['caption_2']]
-            print('prompts: ', prompts)
-            imgs = [os.path.join(path, open_ended_data[i]['image_1']), os.path.join(path, open_ended_data[i]['image_1'])]
-            print('imgs: ', imgs)
+            captions = [open_ended_data[i]['caption_1'], open_ended_data[i]['caption_2'], open_ended_data[i]['question']]
+            # print('prompts: ', captions)
+            img1 = utils.get_image_from_jpg(path=os.path.join(path, open_ended_data[i]['image_1']))
+            img2 = utils.get_image_from_jpg(path=os.path.join(path, open_ended_data[i]['image_2']))
+            img3 = utils.get_image_from_jpg(path=os.path.join(path, open_ended_data[i]['question_image']))
+            imgs = [img1, img2, img3]
+            # print('imgs: ', imgs)
+
+            prompt = [captions[0], imgs[0], captions[1], imgs[1], captions[2], imgs[2]]
+            prompts.append(prompt)
         elif shot == 2:
             ...
 
 
-    ## 1 shot (1 image of a blicket and 1 image of a dax) + (1 image with the question what it is)
-    ## => output should be dax/blicket
-    if shot == 1:
-        prompts = [[f"{data[i][0]['original_text']}[RET]"] for i in range(4, len(data), 5)]  # size=(num_story*1)
-        story_ids = [data[i][0]['story_id'] for i in range(4, len(data), 5)]  # size=(num_story*1)
-    ## 2 shots (2 images of a blicket and 2 images of a dax) + (1 image with the question what it is)
-    ## => output should be dax/blicket
-    elif shot == 2:
-        ...
-    ## 5 captions and 4 images
-    else:
-        prompts = []
-        story_ids = []  # final size = (num_story*9)
-        for i in range(0, len(data), 5):
-            story_prompt = []
-            for j in range(i, i + 5):
-                if j != i + 4:
-                    if 'url_o' in data[j][1].keys():
-                        story_prompt.append(utils.get_image_from_url(data[j][1]['url_o']))
-                    else:
-                        story_prompt.append(utils.get_image_from_url(data[j][1]['url_m']))
-                    story_prompt.append(data[j][0]['original_text'])
-                else:
-                    story_prompt.append(data[j][0]['original_text'])
-            if len(story_prompt) == 9 and None not in story_prompt:
-                prompts.append(story_prompt)
-                story_ids.append(data[i][0]['story_id'])
+    # ## 1 shot (1 image of a blicket and 1 image of a dax) + (1 image with the question what it is)
+    # ## => output should be dax/blicket
+    # if shot == 1:
+    #     prompts = [[f"{data[i][0]['original_text']}[RET]"] for i in range(4, len(data), 5)]  # size=(num_story*1)
+    #     story_ids = [data[i][0]['story_id'] for i in range(4, len(data), 5)]  # size=(num_story*1)
+    # ## 2 shots (2 images of a blicket and 2 images of a dax) + (1 image with the question what it is)
+    # ## => output should be dax/blicket
+    # elif shot == 2:
+    #     ...
+    # ## 5 captions and 4 images
+    # else:
+    #     prompts = []
+    #     story_ids = []  # final size = (num_story*9)
+    #     for i in range(0, len(data), 5):
+    #         story_prompt = []
+    #         for j in range(i, i + 5):
+    #             if j != i + 4:
+    #                 if 'url_o' in data[j][1].keys():
+    #                     story_prompt.append(utils.get_image_from_url(data[j][1]['url_o']))
+    #                 else:
+    #                     story_prompt.append(utils.get_image_from_url(data[j][1]['url_m']))
+    #                 story_prompt.append(data[j][0]['original_text'])
+    #             else:
+    #                     story_prompt.append(data[j][0]['original_text'])
+    #         if len(story_prompt) == 9 and None not in story_prompt:
+    #             prompts.append(story_prompt)
+    #             story_ids.append(data[i][0]['story_id'])
 
     ## Inferecing
     model_outputs = []  # size=(num_story*recall)
     for i, prompt in enumerate(prompts):
         output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall)
-        if len(output[1]) == recall:
-            model_outputs.append(output)
-        else:
-            print(f"Not enough images")
-            story_ids[i] = None
-    return model_outputs, story_ids
+        print('output: ', output)
+        # if len(output[1]) == recall:
+        #     model_outputs.append(output)
+        # else:
+        #     print(f"Not enough images")
+        #     story_ids[i] = None
+    return model_outputs #, story_ids
 
 
 ## MAIN FUCNTION TO RUN EXPERIMENTS AND STORE OUTPUTS
