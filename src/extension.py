@@ -48,8 +48,16 @@ def generate_output(model, open_ended_data: list, shot: int = 1, recall: int = 1
     sample_examples = 500
     path = 'datasets/open_ended_mi/'
     prompts = []
-    for i in range(1):
+    keys_for_prompt = []
+    for i in range(15):
         if shot == 1:
+            # keys_for_prompt = ['caption_1', 'image_1', 'caption_2', 'image_2', 'question', 'question_image']
+
+            # for key_in_prompt in keys_for_prompt:
+            #     if
+            #     partial_prompt = open_ended_data[i][key_in_prompt]
+
+
             captions = [open_ended_data[i]['caption_1'], open_ended_data[i]['caption_2'], open_ended_data[i]['question']]
             # print('prompts: ', captions)
             img1 = utils.get_image_from_jpg(path=os.path.join(path, open_ended_data[i]['image_1']))
@@ -60,6 +68,7 @@ def generate_output(model, open_ended_data: list, shot: int = 1, recall: int = 1
 
             prompt = [captions[0], imgs[0], captions[1], imgs[1], captions[2], imgs[2]]
             prompts.append(prompt)
+
         elif shot == 2:
             ...
 
@@ -95,13 +104,14 @@ def generate_output(model, open_ended_data: list, shot: int = 1, recall: int = 1
     ## Inferecing
     model_outputs = []  # size=(num_story*recall)
     for i, prompt in enumerate(prompts):
-        output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall)
+        print('PROMPT: ', prompt)
+        output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=4)
         print('output: ', output)
         # if len(output[1]) == recall:
         #     model_outputs.append(output)
         # else:
         #     print(f"Not enough images")
-        #     story_ids[i] = None
+        #     # story_ids[i] = None
     return model_outputs #, story_ids
 
 
@@ -137,6 +147,9 @@ def __main__():
     # Load model used in the paper.
     model_dir = './fromage_model/'
     model = models.load_fromage(model_dir)
+
+    new_tokens = ['dax', 'blicket']
+    model.model.tokenizer.add_tokens(new_tokens)
 
     print("-- Loading data:")
     # Load VIST dataset for experiment

@@ -507,6 +507,7 @@ class Fromage(nn.Module):
         visual_embs = self.model.get_visual_embs(pixel_values, mode='captioning')  # (1, n_visual_tokens, D)
         input_embs.append(visual_embs)
       elif type(p) == str:
+        print('PROMPT FROM MODEL: ', p)
         text_ids = self.model.tokenizer(p, add_special_tokens=True, return_tensors="pt").input_ids.to(self.model.logit_scale.device)
         if not add_bos:
           # Remove <bos> tag.
@@ -560,6 +561,7 @@ class Fromage(nn.Module):
     if len(all_ret_idx) == 0:
       # No [RET] tokens.
       caption = self.model.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+      print('CAPTION: ', caption)
       return_outputs.append(utils.truncate_caption(caption))
     else:
       for ret_idx in all_ret_idx:
