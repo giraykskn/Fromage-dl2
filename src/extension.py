@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import numpy as np
+import os
 import copy
 import torch
 import random
@@ -23,16 +24,15 @@ from PIL import Image, UnidentifiedImageError
 
 
 ## FUNCTION OF MODEL RETRIEVING IMAGES
-def generate_output(model, open_ended_data: list, caption: int = 1, image: bool = False, recall: int = 1):
+def generate_output(model, open_ended_data: list, shot: int = 1, recall: int = 1):
     """
     This function reproduces experiments for the following settings:
-    1. inputs with 1 caption
-    2. inputs with 5 captions
-    3. inputs with 5 captions and 4 images
+    1. inputs 1 shot
+    2. inputs 2 shots
 
     Inputs:
             model -- FROMAGE model
-            data -- story sequences from VIST (5 images + 5 captions for each story sequence)
+            data -- open ended miniImage dataset
             caption -- how many previous captions to input
             image -- how many previous images to input
             recall -- represents k in recall
@@ -41,16 +41,31 @@ def generate_output(model, open_ended_data: list, caption: int = 1, image: bool 
     """
 
     ## Flatten data to a 1d list
-    data = [i for story in open_ended_data for i in story]
-    ## 1 caption
-    if caption == 1:
+    # data = [i for story in open_ended_data for i in story]
+    # print('data: ', list(data.keys()))
+    print('length: ', len(open_ended_data))
+
+    sample_examples = 500
+    path = 'datasets/open_ended_mi/'
+    for i in range(sample_examples):
+        if shot == 1:
+            prompts = [open_ended_data[i]['caption_1'], open_ended_data[i]['caption_2']]
+            print('prompts: ', prompts)
+            imgs = [os.path.join(path, open_ended_data[i]['image_1']), os.path.join(path, open_ended_data[i]['image_1'])]
+            print('imgs: ', imgs)
+        elif shot == 2:
+            ...
+
+
+    ## 1 shot (1 image of a blicket and 1 image of a dax) + (1 image with the question what it is)
+    ## => output should be dax/blicket
+    if shot == 1:
         prompts = [[f"{data[i][0]['original_text']}[RET]"] for i in range(4, len(data), 5)]  # size=(num_story*1)
         story_ids = [data[i][0]['story_id'] for i in range(4, len(data), 5)]  # size=(num_story*1)
-    ## 5 captions
-    elif caption == 5 and not image:
-        prompts = [[data[j][0]['original_text'] if j != i + 5 - 1 else f"{data[j][0]['original_text']}[RET]" for j in
-                    range(i, i + caption)] for i in range(0, len(data), caption)]  # size=(num_story*5)
-        story_ids = [data[i][0]['story_id'] for i in range(4, len(data), 5)]  # size=(num_story*1)
+    ## 2 shots (2 images of a blicket and 2 images of a dax) + (1 image with the question what it is)
+    ## => output should be dax/blicket
+    elif shot == 2:
+        ...
     ## 5 captions and 4 images
     else:
         prompts = []
@@ -83,7 +98,7 @@ def generate_output(model, open_ended_data: list, caption: int = 1, image: bool 
 
 
 ## MAIN FUCNTION TO RUN EXPERIMENTS AND STORE OUTPUTS
-def run_experiment(model, save_path: str, VIST_data: list, caption: int = 1, image: bool = False, recall: int = 1):
+def run_experiment(model, save_path: str, open_ended_data: list, shot: int = 1, recall: int = 1):
     """
     This function reproduces experiments for the following settings:
     1. inputs with 1 caption
@@ -100,7 +115,7 @@ def run_experiment(model, save_path: str, VIST_data: list, caption: int = 1, ima
 
     Return: generated images and correponding story id
     """
-    model_outputs, story_ids = generate_output(model, VIST_data, caption, image, recall)
+    model_outputs, story_ids = generate_output(model=model, open_ended_data=open_ended_data, shot=1, recall=1)
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -119,26 +134,23 @@ def __main__():
     # Load VIST dataset for experiment
     file_path = 'datasets/open_ended_mi/open_ended_mi_shots_1_ways_2_all_questions.json'
     with open(file_path, 'r') as f:
-        VIST_data = json.load(f)
-    print(f"-- Finish loading | {len(VIST_data)} stories")
+        open_ended_data = json.load(f)
+    print(f"-- Finish loading | {len(open_ended_data)} stories")
 
     ## Define path to save results
     save_path = "\results"
 
     ## Define experiment configurations
-    caption_image = [(1, False), (5, False), (5, True)]
     recall = [1, 5, 10]
-    config_combinations = list(itertools.product(caption_image, recall))
 
-    for config in config_combinations:
-        if config[0][1] == False:
-            print(f"--- Experiment ongoing - caption{config[0][0]} without images...")
-            run_experiment(model, save_path, VIST_data, config[0][0], config[0][1], config[1])
-            print(f"--- Experiment finished")
-        else:
-            print(f"--- Experiment ongoing - caption{config[0][0]} with 4 images...")
-            run_experiment(model, save_path, VIST_data, config[0][0], config[0][1], config[1])
-            print(f"--- Experiment finished")
+    print(f"--- Experiment ongoing - 1 shot...")
+    run_experiment(model=model, save_path=save_path, open_ended_data=open_ended_data, shot=1, recall=recall[0])
+    print(f"--- Experiment finished")
+
+    # else:
+    #     print(f"--- Experiment ongoing - caption{config[0][0]} with 4 images...")
+    #     run_experiment(model, save_path, VIST_data, config[0][0], config[0][1], config[1])
+    #     print(f"--- Experiment finished")
 
 
 __main__()
