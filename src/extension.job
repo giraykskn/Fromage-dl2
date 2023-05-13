@@ -15,4 +15,4 @@ module load Anaconda3/2022.05
 source activate dl2
 
 # Run your code
-srun python -u reproduce.py
+srun python -u extension.py
