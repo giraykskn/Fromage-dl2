@@ -565,7 +565,6 @@ class Fromage(nn.Module):
     if len(all_ret_idx) == 0:
       # No [RET] tokens.
       caption = self.model.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
-      print('CAPTION: ', caption)
       return_outputs.append(utils.truncate_caption(caption))
     else:
       for ret_idx in all_ret_idx:
