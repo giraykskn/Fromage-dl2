@@ -1,4 +1,4 @@
-# DL2_project
+#                                DL2_project
 Reproduction of "Grounding Language Models to Images for Multimodal Generation"
 
 ## SETUP INSTRUCTIONS 
