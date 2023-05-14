@@ -5,7 +5,6 @@ import numpy as np
 import os
 import json
 from transformers import logging
-import matplotlib.pyplot as plt
 
 logging.set_verbosity_error()
 
@@ -48,22 +47,9 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
 
     if shots == 1 and ways == 2:
         json_path = 'datasets/open_ended_mi/open_ended_mi_shots_1_ways_2_all_questions.json'
-        keys_for_prompt = ['caption_1', 'image_1',
-                           'caption_2', 'image_2',
-                           'question_image']
-    elif shots == 5 and ways == 2:
-        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_5_ways_2_all_questions.json'
-        keys_for_prompt = ['caption_1', 'image_1',
-                           'caption_2', 'image_2',
-                           'caption_3', 'image_3',
-                           'caption_4', 'image_4',
-                           'caption_5', 'image_5',
-                           'caption_6', 'image_6',
-                           'caption_7', 'image_7',
-                           'caption_8', 'image_8',
-                           'caption_9', 'image_9',
-                           'caption_10', 'image_10',
-                           'question_image']
+        keys_for_prompt = ['caption_1', 'image_1', 'caption_2', 'image_2', 'question', 'question_image']
+    elif shots == 2:
+        ...
 
     with open(json_path, 'r') as f:
         open_ended_data = json.load(f)
@@ -87,9 +73,7 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
     ## Inferecing
     model_outputs = []  # size=(num_story*recall)
     for i, prompt in enumerate(prompts):
-        model_outputs.append(prompt)
-        output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=256, temperature=1.5)
-        model_outputs.append(output)
+        output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=4)
         print('output: ', output)
 
     return model_outputs
@@ -138,7 +122,7 @@ def __main__():
 
     # TODO: make commands to run all combinations of experiments
     print(f"--- Experiment ongoing - 1 shot...")
-    run_experiment(model=model, save_path=save_path, shot=5, ways=2, recall=recall[0])
+    run_experiment(model=model, save_path=save_path, shot=1, ways=2, recall=recall[0])
     print(f"--- Experiment finished")
 
 
