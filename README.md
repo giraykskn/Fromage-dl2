@@ -36,8 +36,8 @@ def get_image_from_url(url: str):
 
 ## INSTRUCTIONS TO REPRODUCTION EXPERIMENTS
 The experiment we choose to reproduce is Visual Story Telling (see section 4.1 in the paper). VIST dataset used can be found in https://visionandlanguage.net/VIST/dataset.html (Stories of
-Images-in-Sequence (SIS)). We preprossed this dataset and converted into a json file named 'VIST_data_for_experiments.json' which can be found in src folder. The main file to run the experiments 
-is named 'reproduce.py' and 'reproduce.job' is the job file used to run the py file in cluster, they can be found in src folder as well.It includes in total 5050 story sequences and each story 
+Images-in-Sequence (SIS)). We preprossed this dataset and converted into a json file named `VIST_data_for_experiments.json` which can be found in `src` folder. The main file to run the experiments 
+is named `reproduce.py` and `reproduce.job` is the job file used to run the py file in cluster, they can be found in src folder as well.It includes in total 5050 story sequences and each story 
 sequence has 5 images and 5 corresponding story description which form a short story:
 ```
 image_1 - story_1
