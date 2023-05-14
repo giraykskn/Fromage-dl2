@@ -64,8 +64,13 @@ recall@1 ; recall@5 ; recall@10
 
 
 ## INSTRUCTIONS TO RUN THE EXTENSION NOTEBOOK
+First, the dataset that was used in the extension from the paper " Multimodal Few-Shot Learning with Frozen Language Model " needs to be downloaded. The "open_ended_mi" dataset can be found in the following page: https://fh295.github.io/frozen.html
 
-
+Next steps:
+1. Place the ***"open_ended_mi.tar.gz"*** dataset file inside ***datasets*** folder , found in the ***src*** folder. 
+2. Decompress the tar file inside the ***datasets*** folder. 
+3. Adjust the path to the own root directory in ***extension.py***, line 13.
+4. Run the job file for the extension (***extension.job***).
 
 
 
