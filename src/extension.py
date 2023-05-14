@@ -64,6 +64,8 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
                            'caption_9', 'image_9',
                            'caption_10', 'image_10',
                            'question_image']
+    else:
+        raise Exception('Incorrect number of shots or ways')
 
     with open(json_path, 'r') as f:
         open_ended_data = json.load(f)
@@ -96,7 +98,7 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
 
 
 ## MAIN FUCNTION TO RUN EXPERIMENTS AND STORE OUTPUTS
-def run_experiment(model, save_path: str, shot: int = 1, ways: int = 2,  recall: int = 1):
+def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2,  recall: int = 1):
     """
     This function reproduces experiments for the following settings:
     1. inputs with 1 caption
@@ -113,7 +115,7 @@ def run_experiment(model, save_path: str, shot: int = 1, ways: int = 2,  recall:
 
     Return: generated images and correponding story id
     """
-    model_outputs = generate_output(model=model, shots=1, ways=2, recall=1)
+    model_outputs = generate_output(model=model, shots=shots, ways=ways, recall=recall)
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -138,7 +140,7 @@ def __main__():
 
     # TODO: make commands to run all combinations of experiments
     print(f"--- Experiment ongoing - 1 shot...")
-    run_experiment(model=model, save_path=save_path, shot=5, ways=2, recall=recall[0])
+    run_experiment(model=model, save_path=save_path, shots=1, ways=2, recall=recall[0])
     print(f"--- Experiment finished")
 
 
