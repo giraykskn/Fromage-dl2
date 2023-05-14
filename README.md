@@ -44,7 +44,7 @@ image_1 - story_1
 image_2 - story_2
 image_3 - story_3
 image_4 - story_4
-last_image - last_story
+last_image - story_5
 ```
 The goal of this experiment is to predict the last image based on a few input combinations of previous information (previous images and stories). The following 3 input settings are experimented:
 ```
