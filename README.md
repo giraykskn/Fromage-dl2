@@ -34,15 +34,28 @@ def get_image_from_url(url: str):
 ```
 
 
-## INSTRUCTIONS TO RUN REPRODUCTION EXPERIMENTS
+## INSTRUCTIONS TO REPRODUCTION EXPERIMENTS
 The experiment we choose to reproduce is Visual Story Telling (see section 4.1 in the paper). VIST dataset used can be found in https://visionandlanguage.net/VIST/dataset.html (Stories of
-Images-in-Sequence (SIS)). It includes in total 5050 stories and each story has 5 images and 5 corresponding captions which form a short story. We preprossed this dataset and converted
-into a json file named 'VIST_data_for_experiments.json' which can be found in src folder. The main file to run the experiments is named 'reproduce.py' and 'reproduce.job' is the job file 
-used to run the py file in cluster, they can be found in src folder as well.
-3 experimental settings: 
-1. retrieve last image in a story using 1 caption; 
-2. retrieve last image using 5 captions;
-3. retrieve last image using 5 captions and 4 previous images
+Images-in-Sequence (SIS)). We preprossed this dataset and converted into a json file named 'VIST_data_for_experiments.json' which can be found in src folder. The main file to run the experiments 
+is named 'reproduce.py' and 'reproduce.job' is the job file used to run the py file in cluster, they can be found in src folder as well.It includes in total 5050 story sequences and each story 
+sequence has 5 images and 5 corresponding story description which form a short story:
+```
+image_1 - story_1
+image_2 - story_2
+image_3 - story_3
+image_4 - story_4
+last_image - last_story
+```
+The goal of this experiment is to predict the last image based on a few input combinations of previous information (previous images and stories). The following 3 input settings are experimented:
+```
+1. story_4
+2. story_1 + story_2 + story_3 + story_4 + story_5
+3. story_1 + image_1 + story_2 + image_2 + story_3 + image_3 + story_4 + image_4 + story_5
+```
+For each input setting, three different recall levels are also experimented:
+```
+recall@1 ; recall@5 ; recall@10
+```
 
 ## INSTRUCTIONS TO RUN THE FINAL NOTEBOOK
 
