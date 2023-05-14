@@ -2,8 +2,6 @@
 Reproduction of "Grounding Language Models to Images for Multimodal Generation"
 
 ## SETUP INSTRUCTIONS 
-* Model is loaded in bfloat16 because of memory insufficiency on GPU;
-* Dataparallelization is added for multiple GPU computation (currently commented out since we only use one GPU for now);
 * pytorch==2.0.0 installed
 (to prevent the incompatibility issues with RTX titan running matrix multiplication on bf16)
 
@@ -14,7 +12,7 @@ Reproduction of "Grounding Language Models to Images for Multimodal Generation"
 self.lm = OPTForCausalLM.from_pretrained(opt_version, torch_dtype=torch.bfloat16)
 self.visual_model = CLIPVisionModel.from_pretrained(visual_encoder, torch_dtype=torch.bfloat16)
 ```
-2. added torch.nn.DataParallel to enable multiple GPU (4 GPU) use case:
+2. added torch.nn.DataParallel to enable multiple GPU (4 GPU) use case (currently commented out since we only use one GPU for now):
 ```
 self.lm = torch.nn.DataParallel(self.lm, device_ids=[0, 1, 2, 3])
 self.visual_model = torch.nn.DataParallel(self.visual_model, device_ids=[0, 1, 2, 3])
