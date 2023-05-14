@@ -2,16 +2,16 @@
 Reproduction of "Grounding Language Models to Images for Multimodal Generation"
 
 # SETUP INSTRUCTIONS 
-
-* pytorch==2.0.0
+* Model is loaded in bfloat16 because of memory insufficiency on GPU;
+* Dataparallelization is added for multiple GPU computation (currently commented out since we only use one GPU for now);
+* pytorch==2.0.0 installed
 (to prevent the incompatibility issues with RTX titan running matrix multiplication on bf16)
 
-# INSTRUCTIONS TO RUN THE EXAMPLE NOTEBOOK ON CLUSTER
-Before doing the following steps, please make sure you have cloned the project to your cluster disk and installed all libraries in the requirments.txt (This is not added to the job file as it will run the installation everytime the job file runs, it might slow down a bit even though all requirements are already met after the first time).
-After that, the following steps are necessary:
-1. Modify line " " in final_notebook.ipynb to adapt to your own username and folder name.
-3. Go into the directory where the job file is located. 
-4. run sbatch run.job
+# MODIFICATION OF ORIGINAL FILES
+* util.py: added timeout and try & except in 'get_image_from_url' function for the same reason as some urls might not be responding therefore, to prevent model from running forever.
+
+# INSTRUCTIONS TO RUN REPRODUCTION EXPERIMENTS
+* 
 
 # INSTRUCTIONS TO RUN THE FINAL NOTEBOOK
 
