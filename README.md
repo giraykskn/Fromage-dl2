@@ -8,7 +8,21 @@ Reproduction of "Grounding Language Models to Images for Multimodal Generation"
 (to prevent the incompatibility issues with RTX titan running matrix multiplication on bf16)
 
 ## MODIFICATION OF ORIGINAL FILES
-util.py: added timeout and try & except in 'get_image_from_url' function for the same reason as some urls might not be responding therefore, to prevent model from running forever.
+**util.py**: added timeout (5) and try & except in 'get_image_from_url' function for the same reason as some urls might not be responding therefore, to prevent model from running forever.
+if link is invalid, function returns None:
+```
+## Modified function
+def get_image_from_url(url: str):
+    try:
+      response = requests.get(url, timeout=5)
+      img = Image.open(BytesIO(response.content))
+      img = img.resize((224, 224))
+      img = img.convert('RGB')
+      return img
+    except:
+      return None
+```
+
 
 ## INSTRUCTIONS TO RUN REPRODUCTION EXPERIMENTS
 The experiment we choose to reproduce is Visual Story Telling (see section 4.1 in the paper). VIST dataset used can be found in https://visionandlanguage.net/VIST/dataset.html (Stories of
