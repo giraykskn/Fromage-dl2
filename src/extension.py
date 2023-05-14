@@ -133,7 +133,7 @@ def run_experiment(model, save_path: str, open_ended_data: list, shot: int = 1, 
 
     Return: generated images and correponding story id
     """
-    model_outputs, story_ids = generate_output(model=model, open_ended_data=open_ended_data, shot=1, recall=1)
+    model_outputs = generate_output(model=model, open_ended_data=open_ended_data, shot=1, recall=1)
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -148,8 +148,9 @@ def __main__():
     model_dir = './fromage_model/'
     model = models.load_fromage(model_dir)
 
-    new_tokens = ['dax', 'blicket']
-    model.model.tokenizer.add_tokens(new_tokens)
+    # new_tokens = ['dax', 'blicket']
+    # model.model.tokenizer.add_tokens(new_tokens)
+    # model.model.lm.resize_token_embeddings(len(model.model.tokenizer))
 
     print("-- Loading data:")
     # Load VIST dataset for experiment
