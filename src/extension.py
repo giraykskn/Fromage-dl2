@@ -101,6 +101,8 @@ def run_experiment(model, save_path: str, shot: int = 1, ways: int = 2,  recall:
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
+
+    # TODO: make it save the prompt with the output (for now it only saves the npz files in the correct folder)
     ## Save results in npz file
     with open(f'{save_path}/extension_shots{shot}_ways{ways}_recall{recall}.npz', 'wb') as f:
         np.savez(f, images=model_outputs)
