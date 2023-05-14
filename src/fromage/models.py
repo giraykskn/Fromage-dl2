@@ -18,7 +18,6 @@ from transformers import AutoConfig, AutoModel, AutoModelForCausalLM
 from transformers import OPTForCausalLM, GPT2Tokenizer
 from transformers import CLIPVisionModel, CLIPVisionConfig
 
-from accelerate import init_empty_weights
 
 from fromage import utils
 
