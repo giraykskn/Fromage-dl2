@@ -8,7 +8,19 @@ Reproduction of "Grounding Language Models to Images for Multimodal Generation"
 (to prevent the incompatibility issues with RTX titan running matrix multiplication on bf16)
 
 ## MODIFICATION OF ORIGINAL FILES
-**util.py**: added timeout (5) and try & except in 'get_image_from_url' function for the same reason as some urls might not be responding therefore, to prevent model from running forever.
+***models.py***: 
+1. added bfloat16 parameter when loading model:
+```
+self.lm = OPTForCausalLM.from_pretrained(opt_version, torch_dtype=torch.bfloat16)
+self.visual_model = CLIPVisionModel.from_pretrained(visual_encoder, torch_dtype=torch.bfloat16)
+```
+2. added torch.nn.DataParallel to enable multiple GPU (4 GPU) use case:
+```
+self.lm = torch.nn.DataParallel(self.lm, device_ids=[0, 1, 2, 3])
+self.visual_model = torch.nn.DataParallel(self.visual_model, device_ids=[0, 1, 2, 3])
+```
+***util.py***:
+added timeout (5) and try & except in 'get_image_from_url' function for the same reason as some urls might not be responding therefore, to prevent model from running forever.
 if link is invalid, function returns None:
 ```
 ## Modified function
