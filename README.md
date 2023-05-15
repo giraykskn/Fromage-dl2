@@ -76,13 +76,13 @@ Next steps:
 
 ## REPRODUCED RESULTS (TO BE CONTUNUED) : UPDATE THIS PART BEFORE SUBMITTING!
 Results of reproduced experiments are as follows:
-Caption 1 recall 1 Image False: 0.15
-Caption 1 recall 5 Image False: 0.22
-Caption 1 recall 10 Image False: 0.29
-Caption 5 recall 1 Image False: 0.22
-Caption 5 recall 5 Image False: 0.31
-Caption 5 recall 10 Image False: 0.41
-Caption 5 recall 1 Image True: 0.20
-Caption 5 recall 5 Image True: 0.31
-Caption 5 recall 10 Image True: 0.41
+* Caption 1 recall 1 Image False: 0.15
+* Caption 1 recall 5 Image False: 0.22
+* Caption 1 recall 10 Image False: 0.29
+* Caption 5 recall 1 Image False: 0.22
+* Caption 5 recall 5 Image False: 0.31
+* Caption 5 recall 10 Image False: 0.41
+* Caption 5 recall 1 Image True: 0.20
+* Caption 5 recall 5 Image True: 0.31
+* Caption 5 recall 10 Image True: 0.41
 Recalls for inputs with images are not as expected. They should have been higher than all other scores. 
