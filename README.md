@@ -74,7 +74,7 @@ Next steps:
 
 
 
-## REPRODUCED RESULTS (TO BE CONTUNUED) : UPDATE THIS PART BEFORE SUBMITTING!
+## REPRODUCED RESULTS: UPDATE THIS PART BEFORE SUBMITTING!
 Results (recall) of reproduced experiments are as follows:
 ```
 1 caption without images at recall@1:   0.15
