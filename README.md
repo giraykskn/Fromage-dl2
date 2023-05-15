@@ -85,4 +85,5 @@ Results of reproduced experiments are as follows:
 * Caption 5 recall 1 Image True: 0.20
 * Caption 5 recall 5 Image True: 0.31
 * Caption 5 recall 10 Image True: 0.41
+
 Recalls for inputs with images are not as expected. They should have been higher than all other scores. 
