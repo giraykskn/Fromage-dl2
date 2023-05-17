@@ -29,3 +29,14 @@ Lack of references and context - the reproduction mentions baselines like GPT4 a
 Insufficient detail on experimental setup - the reproduction mentions using different VLMs and LMs such as Flamingo, Clip, Open-Assistant, Codex and FlanT5 as well as traditional Computer Vision methods. However, it does not provide details about the specific usage, configuration or rationale behind the selection of these models. More information would improve transparency and reproducibility. More clarification  about the reasoning behind selecting specific VLMs, LMs and traditional Computer Vision methods would help a lot with understanding the contribution of the extension
 
 More details about the methodology - additional information about the methodology used for assessing the performance of the Socratic model pipeline on logical puzzles would be useful (like explaining the metric used, the dataset, the evaluation scenarios and any data preprocessing or augmentation techniques, if applicable).
+
+
+====================================================== İlayda  ==========================================================
+Strengths of the blogpost:
+1. Clear explanation of the main model - The main idea of Socratic models was clearly explained. The advantages of not requiring training or fine-tuning was included, as well as how versatile and multimodal it is by giving the possible application areas of Socratic models.
+2. Good overview of the strengths and weaknesses -  Strengths and weaknesses in the related area were presented, by making comparisons with the other methods and approaches that were already studied in the same research area. Important weaknesses were included as well.
+3. Precise overview of the contribution - The contribution of this paper to the research area and the objectives presented were clear and concise, which makes it possible to have a general overview, and good understanding of the topic/project.
+
+Points that could be improved:
+1. Lack of further explanation and reference of the other mentioned methods/models - There were some models mentioned that the Socratic models will possibly build upon, but it was not very clearly given how they would be used. Traditional Computer Vision methods were also mentioned, which was not further explained as in what those would consist of.
+2. Insufficient explanation about the assessment - There was an assessment metric based on logic puzzles mentioned, but there were no further explanations to the metric and how exactly the evaluation will be made.
