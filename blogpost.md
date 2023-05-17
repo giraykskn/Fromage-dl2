@@ -1,5 +1,7 @@
 # 1. Introduction
 
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Introduction: An analysis of the paper and its key components. Think about it as a nicely formatted review as you would see on OpenReview.net. It should contain one paragraph of related work as well.`
+
 Large language models (LLMs) have demonstrated impressive performance in natural language processing (NLP) tasks, but they lack the ability to utilize visual cues for learning and reasoning about the real world. Additionally, they are unable to generate images, which is a crucial aspect of multimodal communication. In this paper, a novel approach called FROMAGE is proposed, which leverages a frozen LLM and a visual encoder to enable in-context learning for multimodal tasks.
 
 FROMAGE uses a frozen large language model and a visual encoder. Both models can produce embeddings of different modalities separately, but they cannot interact with each other to explore multi-modal context. FROMAGE proposes a framework for creating an interaction layer between both models. The embeddings generated from the language model are mapped to the visual encoder's vector space using linear transformation to allow LLM to interact with the visual encoder. To generate an embedding for an image using the text input, they propose extending the vocabulary of LLM with the [RET] token. This represents an embedding of an image from the text input, which is learned during training to map the text space into the image space. They use the contrastive loss to learn the mapping. Moreover, with this approach, learning to generate the [RET] token for multi-modal dialogue emerges. Similar to text-visual embedding mapping, they also map the visual embedding to the text space using linear mapping. They use maximum likelihood estimation to learn the mapping.
@@ -23,15 +25,31 @@ Regarding your second contribution, comparing the multimodal and text-only few-s
 Finally, for your third contribution, which benchmark models do you plan to compare FROMAGE against? What metrics will you use to evaluate performance?
 ]
 
-# 2. Reproduction 
+# 2. Strengths 
 
-# 3. Extension
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+
+# 3. Weaknesses
+
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+
+# 4. Reproduction 
+
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+
+# 5. Our Novel Contribution
+
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Change this.`
 
 To test if the FROMAGe model can perform in-context learning we take inspiration from A. Beygelzimer et al. (2021) (Figure 4). We take their dataset - Open Ended Mini ImageNet. It consists of images and their corresponding captions. The interesting part is that the captions use nonsense words, for example 'dax' and 'blicket'. There are different few shot variants in the dataset. This means we can input 1, 3 or 5 images of dax and 1, 3 or 5 images of blicket in the prompt. There are 2500 samples for each few-shot variation and we take 500 random samples and try to retrieve a caption for the last image. We do this experiment to see if FROMAGe is able to perform in-context learning using a few-shot prompt. This did not work out-of-the-box and we thought it might have been because the language model cannot retrieve tokens that are not included in the vocabulary. For this reason, we add the new tokens (in this case 'dax' and 'blicket') to the vocabulary and perform the experiments again, which also did not help. We also experimented with shorter prompts (only 'dax' as prompt for instance), differnt nummber of words to be returned by the model, different temeperature parameters. Additionally, we experimented with 5 shots, which also did not improve the performance. (results examples to be added later)
 
 If time allows, we will also experiment with the model retrieving an image (instead of a caption) of a 'dax' for example. 
 
-# 4. REFERENCES:
+# 6. Conclusion
+
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+
+# REFERENCES:
 
 @inproceedings{
 tsimpoukelli2021multimodal,
