@@ -47,12 +47,54 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
     # 'question' and 'question_image' at the end
 
     if shots == 1 and ways == 2:
+        print('running 1 shot, 2 ways')
         json_path = 'datasets/open_ended_mi/open_ended_mi_shots_1_ways_2_all_questions.json'
         keys_for_prompt = ['caption_1', 'image_1',
                            'caption_2', 'image_2',
                            'question_image']
+    elif shots == 1 and ways == 5:
+        print('running 1 shot, 5 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_1_ways_5_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'question_image']
+    elif shots == 3 and ways == 2:
+        print('running 3 shot, 2 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_3_ways_2_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'question_image']
+    elif shots == 3 and ways == 5:
+        print('running 3 shot, 5 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_3_ways_5_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'question_image']
     elif shots == 5 and ways == 2:
+        print('running 5 shots, 2 ways')
         json_path = 'datasets/open_ended_mi/open_ended_mi_shots_5_ways_2_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'caption_7', 'image_7',
+                           'caption_8', 'image_8',
+                           'caption_9', 'image_9',
+                           'caption_10', 'image_10',
+                           'question_image']
+    elif shots == 5 and ways == 5:
+        print('running 5 shots, 5 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_5_ways_5_all_questions.json'
         keys_for_prompt = ['caption_1', 'image_1',
                            'caption_2', 'image_2',
                            'caption_3', 'image_3',
@@ -140,7 +182,7 @@ def __main__():
 
     # TODO: make commands to run all combinations of experiments
     print(f"--- Experiment ongoing - 1 shot...")
-    run_experiment(model=model, save_path=save_path, shots=1, ways=2, recall=recall[0])
+    run_experiment(model=model, save_path=save_path, shots=5, ways=2, recall=recall[0])
     print(f"--- Experiment finished")
 
 
