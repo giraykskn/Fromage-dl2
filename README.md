@@ -74,6 +74,17 @@ Next steps:
 
 
 
-## REPRODUCED RESULTS (TO BE CONTUNUED) : UPDATE THIS PART BEFORE SUBMITTING!
-Results of reproduced experiments can be found in this link:
-https://drive.google.com/drive/folders/1saV-XPLsoqL65xUEbOgrEhE7XbfL_WMJ?usp=share_link
+## REPRODUCED RESULTS: UPDATE THIS PART BEFORE SUBMITTING!
+Results (recall) of reproduced experiments are as follows:
+```
+1 caption without images at recall@1:   0.15
+1 caption without images at recall@5:   0.22
+1 caption without images at recall@10:  0.29
+5 captions without images at recall@1:  0.22
+5 captions without images at recall@5:  0.31
+5 captions without images at recall@10: 0.41
+5 captions with 4 images at recall@1:   0.20
+5 captions with 4 images at recall@5:   0.31
+5 captions with 4 images at recall@10:  0.41
+```
+*Recalls for inputs with images are not as expected. They should have been higher than all other scores.* 
