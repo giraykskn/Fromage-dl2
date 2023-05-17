@@ -9,3 +9,23 @@ However, there are a few additional points that could enhance the blog post:
 5. Conclusion and future directions: The blog post concludes with the anticipated outcomes of the research project, but it could expand on the implications and potential future directions based on the results. Discussing how the findings could contribute to advancing the field of Socratic Models and suggesting possible avenues for further research or applications would provide a stronger conclusion to the blog post. 
 
 By incorporating these additional points, the blog post would offer a more comprehensive understanding of the paper and its implications, ensuring that readers gain a deeper insight into the topic.
+
+
+
+
+====================================================== Stela ======================================================
+Good points of the reproduction:
+
+Comprehensive overview - the reproduction provides a thorough and comprehensive overview of the original paper, covering the main ideas, contributions, strengths, weaknesses and research objectives. It effectively summarizes the key aspects of the original work
+
+Clear presentation of strengths - the strengths of the Socratic Models are well articulated, highlighting their ability to leverage pre-trained models without the need for additional training, their multimodal understanding and the potential for improved language understanding through the composition of VLMs and LMs
+
+Significance and Contribution - the reproduction effectively communicates the significance of the research project and its contribution to the field, which is to explore the capabilities of the Socratic model in solving logical puzzles and compare it with existing methods. It sets clear research objectives and outcomes
+
+Points that could be improved:
+
+Lack of references and context - the reproduction mentions baselines like GPT4 and mini-GPT4 without providing context or references to these models. It would be helpful to provide a brief explanation or include appropriate references to enhance the clarity and credibility of the comparison. This would help readers understand the existing methods being compared and allow them to explore if desired
+
+Insufficient detail on experimental setup - the reproduction mentions using different VLMs and LMs such as Flamingo, Clip, Open-Assistant, Codex and FlanT5 as well as traditional Computer Vision methods. However, it does not provide details about the specific usage, configuration or rationale behind the selection of these models. More information would improve transparency and reproducibility. More clarification  about the reasoning behind selecting specific VLMs, LMs and traditional Computer Vision methods would help a lot with understanding the contribution of the extension
+
+More details about the methodology - additional information about the methodology used for assessing the performance of the Socratic model pipeline on logical puzzles would be useful (like explaining the metric used, the dataset, the evaluation scenarios and any data preprocessing or augmentation techniques, if applicable).
