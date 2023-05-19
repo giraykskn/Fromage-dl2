@@ -38,3 +38,18 @@ Points that could be improved:
 
 1. Lack of further explanation and reference of the other mentioned methods/models - There were some models mentioned that the Socratic models will possibly build upon, but it was not very clearly given how they would be used. Traditional Computer Vision methods were also mentioned, which was not further explained as in what those would consist of.
 2. Insufficient explanation about the assessment - There was an assessment metric based on logic puzzles mentioned, but there were no further explanations to the metric and how exactly the evaluation will be made.
+
+
+
+Goksenin
+-----------------------------------------------------------------------------------------------------------
+Good Points:
+1. Very interesting research direction
+2. Clear overview of strengths and weaknesses
+3. Clear overview of the SM framework.
+
+Points of improvement:
+
+1. Lack of explanation for how to fine-tune the prompt for the model to solve the logic puzzle.
+2. Lack of explanation for how to use baseline models for logic puzzle solving also. How can you use CLIP to solve the puzzle for example.
+3. Weaknesses of the SM's were mentioned, but not eloborated in the extension. 
