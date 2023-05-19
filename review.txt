@@ -53,3 +53,13 @@ Points of improvement:
 1. Lack of explanation for how to fine-tune the prompt for the model to solve the logic puzzle.
 2. Lack of explanation for how to use baseline models for logic puzzle solving also. How can you use CLIP to solve the puzzle for example.
 3. Weaknesses of the SM's were mentioned, but not eloborated in the extension. 
+
+
+====================================================== Giray ======================================================
+Overall, the blog post provides a clear and informative introduction to Socratic Models (SMs) and their potential applications. It effectively highlights the strengths and weaknesses of SMs, as well as the significance of the proposed research project. Here are some specific feedback points:
+
+1. Consider including visual aids, such as diagrams or figures, to help illustrate the concepts. This can make the blog post more engaging.
+
+2. Some weaknesses and strengths could be detailed further, like better language understanding or the ambiguity of language as the medium.
+
+Your contribution looks really interesting, but the overall post needs minor touches in the writing but that is fine considering this is a first draft.
