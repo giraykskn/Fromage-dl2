@@ -80,9 +80,9 @@ Results (recall) of reproduced experiments are as follows:
 1 caption without images at recall@1:   0.15
 1 caption without images at recall@5:   0.22
 1 caption without images at recall@10:  0.29
-5 captions without images at recall@1:  0.22
-5 captions without images at recall@5:  0.31
-5 captions without images at recall@10: 0.41
+5 captions without images at recall@1:  0.26
+5 captions without images at recall@5:  0.37
+5 captions without images at recall@10: 0.46
 5 captions with 4 images at recall@1:   0.20
 5 captions with 4 images at recall@5:   0.31
 5 captions with 4 images at recall@10:  0.41
