@@ -78,13 +78,14 @@ Next steps:
 Results (recall) of reproduced experiments are as follows:
 ```
 1 caption without images at recall@1:   0.15
-1 caption without images at recall@5:   0.22
-1 caption without images at recall@10:  0.29
-5 captions without images at recall@1:  0.26
-5 captions without images at recall@5:  0.37
-5 captions without images at recall@10: 0.46
-5 captions with 4 images at recall@1:   0.20
-5 captions with 4 images at recall@5:   0.31
-5 captions with 4 images at recall@10:  0.41
+1 caption without images at recall@5:   0.24
+1 caption without images at recall@10:  0.30
+5 captions without images at recall@1:  0.21
+5 captions without images at recall@5:  0.32
+5 captions without images at recall@10: 0.41
+5 captions with 4 images at recall@1:   0.17
+5 captions with 4 images at recall@5:   0.25
+5 captions with 4 images at recall@10:  0.34
 ```
 *Recalls for inputs with images are not as expected. They should have been higher than all other scores.* 
+*results can be found in this link: https://drive.google.com/drive/folders/1bS0jdp1VlxhmZ8WWy5SDGkOov98yLV06?usp=share_link
