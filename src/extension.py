@@ -5,6 +5,7 @@ import numpy as np
 import os
 import json
 from transformers import logging
+import matplotlib.pyplot as plt
 
 logging.set_verbosity_error()
 
@@ -46,10 +47,67 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
     # 'question' and 'question_image' at the end
 
     if shots == 1 and ways == 2:
+        print('running 1 shot, 2 ways')
         json_path = 'datasets/open_ended_mi/open_ended_mi_shots_1_ways_2_all_questions.json'
-        keys_for_prompt = ['caption_1', 'image_1', 'caption_2', 'image_2', 'question', 'question_image']
-    elif shots == 2:
-        ...
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'question_image']
+    elif shots == 1 and ways == 5:
+        print('running 1 shot, 5 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_1_ways_5_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'question_image']
+    elif shots == 3 and ways == 2:
+        print('running 3 shot, 2 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_3_ways_2_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'question_image']
+    elif shots == 3 and ways == 5:
+        print('running 3 shot, 5 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_3_ways_5_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'question_image']
+    elif shots == 5 and ways == 2:
+        print('running 5 shots, 2 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_5_ways_2_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'caption_7', 'image_7',
+                           'caption_8', 'image_8',
+                           'caption_9', 'image_9',
+                           'caption_10', 'image_10',
+                           'question_image']
+    elif shots == 5 and ways == 5:
+        print('running 5 shots, 5 ways')
+        json_path = 'datasets/open_ended_mi/open_ended_mi_shots_5_ways_5_all_questions.json'
+        keys_for_prompt = ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'caption_7', 'image_7',
+                           'caption_8', 'image_8',
+                           'caption_9', 'image_9',
+                           'caption_10', 'image_10',
+                           'question_image']
+    else:
+        raise Exception('Incorrect number of shots or ways')
 
     with open(json_path, 'r') as f:
         open_ended_data = json.load(f)
@@ -73,14 +131,16 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
     ## Inferecing
     model_outputs = []  # size=(num_story*recall)
     for i, prompt in enumerate(prompts):
-        output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=4)
+        model_outputs.append(prompt)
+        output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=256, temperature=1.5)
+        model_outputs.append(output)
         print('output: ', output)
 
     return model_outputs
 
 
 ## MAIN FUCNTION TO RUN EXPERIMENTS AND STORE OUTPUTS
-def run_experiment(model, save_path: str, shot: int = 1, ways: int = 2,  recall: int = 1):
+def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2,  recall: int = 1):
     """
     This function reproduces experiments for the following settings:
     1. inputs with 1 caption
@@ -97,7 +157,7 @@ def run_experiment(model, save_path: str, shot: int = 1, ways: int = 2,  recall:
 
     Return: generated images and correponding story id
     """
-    model_outputs = generate_output(model=model, shots=1, ways=2, recall=1)
+    model_outputs = generate_output(model=model, shots=shots, ways=ways, recall=recall)
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -122,7 +182,7 @@ def __main__():
 
     # TODO: make commands to run all combinations of experiments
     print(f"--- Experiment ongoing - 1 shot...")
-    run_experiment(model=model, save_path=save_path, shot=1, ways=2, recall=recall[0])
+    run_experiment(model=model, save_path=save_path, shots=5, ways=2, recall=recall[0])
     print(f"--- Experiment finished")
 
 

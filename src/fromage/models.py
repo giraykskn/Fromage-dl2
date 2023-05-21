@@ -70,7 +70,7 @@ class FromageModel(nn.Module):
     self.retrieval_token_idx = args.retrieval_token_idx
     print('BEFORE ADDING: ', len(tokenizer))
     new_tokens = ['dax', 'blicket']
-    tokenizer.add_tokens(new_tokens)
+    #tokenizer.add_tokens(new_tokens)
     print('AFTER ADDING: ', len(tokenizer))
     print(f'Initializing embedding for the retrieval token [RET] (id = {self.retrieval_token_idx}).')
     self.lm.resize_token_embeddings(len(tokenizer))
@@ -364,7 +364,6 @@ class FromageModel(nn.Module):
       output_embeddings: (N, T, 256) sequence of text output embeddings.
     """
     self.lm.eval()
-
     with torch.no_grad():  # no tracking history
       batch_size, s, _ = embeddings.shape
       # init output with image tokens

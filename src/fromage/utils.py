@@ -22,12 +22,23 @@ def dump_git_status(out_file=sys.stdout, exclude_file_patterns=['*.ipynb', '*.th
   subprocess.call('git --no-pager diff -- . {}'.format(exclude_string), shell=True, stdout=out_file)
 
 
+# def get_image_from_url(url: str):
+#     response = requests.get(url)
+#     img = Image.open(BytesIO(response.content))
+#     img = img.resize((224, 224))
+#     img = img.convert('RGB')
+#     return img
+
+## Modified
 def get_image_from_url(url: str):
-    response = requests.get(url)
-    img = Image.open(BytesIO(response.content))
-    img = img.resize((224, 224))
-    img = img.convert('RGB')
-    return img
+    try:
+      response = requests.get(url, timeout=5)
+      img = Image.open(BytesIO(response.content))
+      img = img.resize((224, 224))
+      img = img.convert('RGB')
+      return img
+    except:
+      return None 
 
 
 def get_image_from_jpg(path: str):

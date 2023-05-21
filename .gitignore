@@ -15,9 +15,10 @@ env/
 
 # Ignore log files
 *.log
+src/fromage_model/*.out
 
 # Ignore embeddings
 src/fromage_model/cc3m_embeddings.pkl
-
 # Ignore .out files
 *.out
+src/fromage_model/pretrained_ckpt.pth.tar
