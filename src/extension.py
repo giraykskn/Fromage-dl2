@@ -5,6 +5,7 @@ import numpy as np
 import os
 import json
 from transformers import logging
+import itertools
 import matplotlib.pyplot as plt
 logging.set_verbosity_error()
 import sys
@@ -15,6 +16,7 @@ import logging
 import time
 import pickle
 import argparse
+
 
 
 # Create a logger
@@ -111,18 +113,12 @@ def generate_output(model, shots, ways, repeats, recall: int = 1):
 ## MAIN FUCNTION TO RUN EXPERIMENTS AND STORE OUTPUTS
 def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2, repeats: int = 1, recall: int = 1):
     """
-    This function reproduces experiments for the following settings:
-    1. inputs with 1 caption
-    2. inputs with 5 captions
-    3. inputs with 5 captions and 4 images
-
     Inputs:
             model -- FROMAGE model
             save_path -- path to save results
-            data -- story sequences from VIST (5 images + 5 captions for each story sequence)
-            caption -- how many previous captions to input
-            image -- how many previous images to input
-            recall -- represents k in recall
+            data -- story sequences from open-mi
+            shots -- how many shots of images
+            ways -- how many different categories of images used
 
     Return: generated images and correponding story id
     """
