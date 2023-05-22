@@ -41,7 +41,7 @@ def generate_output(model, stories:list, caption:int=1, image:int=0, recall:int=
 
     Inputs:
             model -- FROMAGE model
-            data -- story sequences from VIST (5 images + 5 captions for each story sequence)
+            storiees -- story sequences from VIST (5 images + 5 captions for each story sequence)
             caption -- how many previous captions to input
             image -- how many previous images to input
             recall -- represents k in recall
