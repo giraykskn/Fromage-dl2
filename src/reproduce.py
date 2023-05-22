@@ -150,11 +150,8 @@ def __main__():
     print(f"Retrieval finished. {len(stories)} stories retrieved.")
 
     ## Define experiment configurations
-    caption = [5]
-    image = [0,4]
-    recall = [1,5,10]
-    config_combinations = list(itertools.product(caption,image,recall))
-    for config in config_combinations:
+    configs = [(1,0,1), (1,0,5), (1,0,10), (5,0,1),(5,0,5),(5,0,10),(5,4,1),(5,4,5),(5,4,10)] #e.g. (1,0,1) represents inputs with 1 caption no image at recall@1
+    for config in configs:
         print(f"--- Experiment ongoing - caption{config[0]} / image{config[1]} / recall{config[2]}...")
         run_experiment(model, save_path, stories, config[0], config[1], config[2])
         print(f"--- Experiment finished")
