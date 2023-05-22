@@ -78,13 +78,34 @@ Next steps:
 Results (recall) of reproduced experiments are as follows:
 ```
 1 caption without images at recall@1:   0.15
-1 caption without images at recall@5:   0.22
-1 caption without images at recall@10:  0.29
-5 captions without images at recall@1:  0.26
-5 captions without images at recall@5:  0.37
-5 captions without images at recall@10: 0.46
-5 captions with 4 images at recall@1:   0.20
-5 captions with 4 images at recall@5:   0.31
-5 captions with 4 images at recall@10:  0.41
+1 caption without images at recall@5:   0.24
+1 caption without images at recall@10:  0.30
+5 captions without images at recall@1:  0.21
+5 captions without images at recall@5:  0.32
+5 captions without images at recall@10: 0.41
+5 captions with 4 images at recall@1:   0.17
+5 captions with 4 images at recall@5:   0.25
+5 captions with 4 images at recall@10:  0.34
 ```
 *Recalls for inputs with images are not as expected. They should have been higher than all other scores.* 
+*results can be found in this link: https://drive.google.com/drive/folders/1bS0jdp1VlxhmZ8WWy5SDGkOov98yLV06?usp=share_link
+
+The results npz files can be accessed using the following 3 keys: images_output, images_target, story_ids, representing images output by the model which is a list of lists; target images to compare with which is a list;
+story ids corresponding to all stories which is also a list. The following code can be used to analyze precision of the outcome:
+```
+import numpy as np
+
+configs = [(1,0,1), (1,0,5), (1,0,10), (5,0,1),(5,0,5),(5,0,10),(5,4,1),(5,4,5),(5,4,10)]
+result_dir = ...
+for config in configs:
+    path = f"{result_dir}/EX1_R{config[2]}_C{config[0]}_I{config[1]}.npz"
+    result = np.load(path)
+    ids = result['story_ids']
+    images = result['images_output']
+    targets = result['images_target']
+    count = 0
+    for j, img in enumerate(images):
+        matches = [int(np.array_equal(k, targets[j])) for k in img]
+        count += int(sum(matches)>0)
+    print(f"{config[0]} captions {config[1]} images at recall {config[2]}: {count*100/1000}%")
+```

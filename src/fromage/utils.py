@@ -21,6 +21,55 @@ def dump_git_status(out_file=sys.stdout, exclude_file_patterns=['*.ipynb', '*.th
   exclude_string = ''
   subprocess.call('git --no-pager diff -- . {}'.format(exclude_string), shell=True, stdout=out_file)
 
+def _generate_keys(shots,ways):
+    if shots == 1 and ways == 2:
+        return ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'question_image']
+    elif shots == 1 and ways == 5:
+        return ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'question_image']
+    elif shots == 3 and ways == 2:
+        return ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'question_image']
+    elif shots == 3 and ways == 5:
+        return ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'question_image']
+    elif shots == 5 and ways == 2:
+        return ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'caption_7', 'image_7',
+                           'caption_8', 'image_8',
+                           'caption_9', 'image_9',
+                           'caption_10', 'image_10',
+                           'question_image']
+    elif shots == 5 and ways == 5:
+        return ['caption_1', 'image_1',
+                           'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
+                           'caption_6', 'image_6',
+                           'caption_7', 'image_7',
+                           'caption_8', 'image_8',
+                           'caption_9', 'image_9',
+                           'caption_10', 'image_10',
+                           'question_image']
 
 # def get_image_from_url(url: str):
 #     response = requests.get(url)
