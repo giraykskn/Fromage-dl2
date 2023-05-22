@@ -29,6 +29,9 @@ def _generate_keys(shots,ways):
     elif shots == 1 and ways == 5:
         return ['caption_1', 'image_1',
                            'caption_2', 'image_2',
+                           'caption_3', 'image_3',
+                           'caption_4', 'image_4',
+                           'caption_5', 'image_5',
                            'question_image']
     elif shots == 3 and ways == 2:
         return ['caption_1', 'image_1',
@@ -45,6 +48,15 @@ def _generate_keys(shots,ways):
                            'caption_4', 'image_4',
                            'caption_5', 'image_5',
                            'caption_6', 'image_6',
+                           'caption_7', 'image_7',
+                           'caption_8', 'image_8',
+                           'caption_9', 'image_9',
+                           'caption_10', 'image_10',
+                           'caption_11', 'image_11',
+                           'caption_12', 'image_12',
+                           'caption_13', 'image_13',
+                           'caption_14', 'image_14',
+                           'caption_15', 'image_15',
                            'question_image']
     elif shots == 5 and ways == 2:
         return ['caption_1', 'image_1',
@@ -69,6 +81,21 @@ def _generate_keys(shots,ways):
                            'caption_8', 'image_8',
                            'caption_9', 'image_9',
                            'caption_10', 'image_10',
+                           'caption_11', 'image_11',
+                           'caption_12', 'image_12',
+                           'caption_13', 'image_13',
+                           'caption_14', 'image_14',
+                           'caption_15', 'image_15',
+                           'caption_16', 'image_16',
+                           'caption_17', 'image_17',
+                           'caption_18', 'image_18',
+                           'caption_19', 'image_19',
+                           'caption_20', 'image_20',
+                           'caption_21', 'image_21',
+                           'caption_22', 'image_22',
+                           'caption_23', 'image_23',
+                           'caption_24', 'image_24',
+                           'caption_25', 'image_25',
                            'question_image']
 
 # def get_image_from_url(url: str):
