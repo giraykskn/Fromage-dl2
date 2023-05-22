@@ -45,7 +45,6 @@ class Experiment:
         index = 15 if self.use_sample else len(self.json)
         for i in range(index):
             prompt = []
-            logger.info(f"Loaded the experiment number: {i}")
             for key_in_prompt in self.keys_for_prompt:
                 # First append the image, then the caption
                 if ('caption' in key_in_prompt) or (key_in_prompt == 'question'):
@@ -97,9 +96,12 @@ def generate_output(model, shots, ways, recall: int = 1):
 
     number_of_correct = 0
     for i, (prompt,label) in enumerate(zip(experiment.prompts, experiment.labels)):
+        if i % 50 == 0:
+            logger.warning(f"Accuracy after {i} examples is {number_of_correct / len(experiment.prompts)}")
         model_outputs.append(prompt)
         output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=2, temperature=0)
         model_outputs.append(output)
+        logger.info("Output from model is : {}, target is : {}".format(output, label))
         number_of_correct += int(label in output[0])
 
     end_time = time.time()

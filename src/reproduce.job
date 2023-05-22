@@ -12,7 +12,7 @@
 module purge
 module load 2022
 module load Anaconda3/2022.05
-source activate dl2
+source activate dl2022_4
 
 # Run your code
 srun python -u reproduce.py
