@@ -71,26 +71,22 @@ def load_experiment(shots, ways, repeats):
     return experiment
 
 ## FUNCTION OF MODEL RETRIEVING IMAGES
-def generate_output(model, shots, ways, repeats, recall: int = 1):
+def generate_output(model, shots, ways, repeats):
     """
-    This function reproduces experiments for the following settings:
-    1. inputs 1 shot
-    2. inputs 2 shots
-
     Inputs:
             model -- FROMAGE model
             data -- open ended miniImage dataset
             caption -- how many previous captions to input
             image -- how many previous images to input
-            recall -- represents k in recall
+            repeats -- how many repeats
 
-    Return: generated images and correponding story id
+    Return: generated output
     """
 
 
     ## Inferecing
     experiment = load_experiment(shots = shots, ways = ways, repeats = repeats)
-    model_outputs = []  # size=(num_story*recall)
+    model_outputs = []
     logger.info("Finished loading the experiment, inferencing with the fromage model")
     start_time = time.time()
 
@@ -99,7 +95,7 @@ def generate_output(model, shots, ways, repeats, recall: int = 1):
         if (i % 200 == 0) and (i != 0):
             logger.warning(f"Accuracy after {i} examples is {number_of_correct / i}")
         model_outputs.append(prompt)
-        output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=2, temperature=0)
+        output = model.generate_for_images_and_texts(prompt, max_num_rets=0, num_words=2, temperature=0)
         model_outputs.append(output)
         number_of_correct += int(label in output[0])
 
@@ -111,7 +107,7 @@ def generate_output(model, shots, ways, repeats, recall: int = 1):
 
 
 ## MAIN FUCNTION TO RUN EXPERIMENTS AND STORE OUTPUTS
-def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2, repeats: int = 1, recall: int = 1):
+def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2, repeats: int = 1):
     """
     Inputs:
             model -- FROMAGE model
@@ -122,14 +118,14 @@ def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2, repeats
 
     Return: generated images and correponding story id
     """
-    model_outputs = generate_output(model=model, shots=shots, ways=ways, repeats= repeats, recall=recall)
+    model_outputs = generate_output(model=model, shots=shots, ways=ways, repeats= repeats)
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
     # TODO: make it save the prompt with the output (for now it only saves the npz files in the correct folder)
     ## Save results in npz file
-    with open(f'{save_path}/extension_shots_{shots}_ways_{ways}_recall_{recall}_repeats_{repeats}.pkl', 'wb') as f:
+    with open(f'{save_path}/extension_shots_{shots}_ways_{ways}_repeats_{repeats}.pkl', 'wb') as f:
         pickle.dump(model_outputs,f)
 
 
@@ -145,14 +141,11 @@ def __main__(number_of_ways, number_of_shots, number_of_repeats, file_name):
     file_handler.setFormatter(formatter)
 
     ## Define path to save results
-    save_path = "Results/Extension/"
-
-    ## Define experiment configurations
-    recall = [1, 5, 10]
+    save_path = "results/extension/"
 
     # TODO: make commands to run all combinations of experiments
     logger.info(f"--- Experiment ongoing - 1 shot...")
-    run_experiment(model=model, save_path=save_path, shots=number_of_shots, ways=number_of_ways,repeats = number_of_repeats, recall=recall[0])
+    run_experiment(model=model, save_path=save_path, shots=number_of_shots, ways=number_of_ways,repeats = number_of_repeats)
     logger.info(f"--- Experiment finished")
 
 
