@@ -193,7 +193,7 @@ def __main__():
     # Run all experiments
     for config in config_combinations:
         print(f"--- Experiment ongoing - {config[0]} shots with {config[1]} ways...")
-        run_experiment(model=model, save_path="extension_results", shots=config[0], ways=config[1])
+        run_experiment(model=model, save_path=save_path, shots=config[0], ways=config[1])
         print(f"--- Experiment finished")
 
 
