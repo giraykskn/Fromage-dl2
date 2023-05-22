@@ -22,3 +22,10 @@ src/fromage_model/cc3m_embeddings.pkl
 # Ignore .out files
 *.out
 src/fromage_model/pretrained_ckpt.pth.tar
+
+# Ignore pkl and npz and tar
+*.pkl
+*.npz 
+*.tar.gz
+# Ignore dataset
+src/datasets*
