@@ -11,19 +11,30 @@ import itertools
 from itertools import zip_longest
 import os
 logging.set_verbosity_error()
-
+import logging
+import time
+import pickle
+import argparse
 from PIL import Image
-
 import sys
-sys.path.append('/home/lcur1734/fromage') ##change this to your folder where you put the whole project
-
+sys.path.append('/home/lcur1748/fromage') ##change this to your folder where you put the whole project
 from fromage import models
 from fromage import utils
 from PIL import Image, UnidentifiedImageError
-
+# Create a logger
+logger = logging.getLogger('my_logger')
+# Set the logging level (optional)
+logger.setLevel(logging.DEBUG)
+# create a file handler
+# Set the format for log message
+file_handler = logging.FileHandler("reproduce.log")
+logger.addHandler(file_handler)   
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
 
 def retrieve_story(VIST_data:list):
     stories = []
+    logger.info("Retrieving Stories from VIST Data")
     for story in VIST_data:
         story_valid = check_story(story)
         if None not in story_valid[0]:
@@ -48,7 +59,7 @@ def generate_output(model, stories:list, caption:int=1, image:int=0, recall:int=
 
     Return: generated images and correponding story id
     """
-
+    logger.info("Caption: {}, Image : {}, Recall : {}".format(caption,image,recall))
     prompts = []
     targets = []
     story_ids = []
@@ -59,12 +70,11 @@ def generate_output(model, stories:list, caption:int=1, image:int=0, recall:int=
         prompt_captions = story[1][-caption:]
         prompt_captions[-1] = f"{prompt_captions[-1]}[RET]"
         story_id = story[2]
-        prompt = [item for pair in zip_longest(prompt_images, prompt_captions, fillvalue=None) for item in pair if item is not None]
+        prompt = [item for pair in zip_longest(prompt_captions, prompt_images, fillvalue=None) for item in pair if item is not None]
         ## add it to the prompt lists
         targets.append(target_image)
         story_ids.append(story_id)
         prompts.append(prompt)
-
     ## Inferecing
     outputs_images = []
     output_targets = []
@@ -122,9 +132,24 @@ def run_experiment(model, save_path:str, VIST_data:list, caption:int=1, image:in
     ## Save results in npz file
     outputs_images = [[np.asarray(y) for y in x[1]] for x in outputs_images]
     output_targets = [np.asarray(x) for x in output_targets]
+
+
+    recall_ = 0
+    # For each target image
+    for index,target_image in enumerate(output_targets):
+        # Check the predicted images for this
+        for predicted_image in outputs_images[index]:
+            # If we have predicted_image == target_image then add one to the recall
+            if np.array_equal(target_image, predicted_image):
+                recall_ += 1
+                break
+            
+
+    logger.debug(f"Length of output images: {len(outputs_images)}, shape of the first image: {outputs_images[0][0].shape}")
+    logger.debug(f"Length of the output targets: {len(output_targets)}, shape of the first target: {output_targets[0].shape}")
+    logger.debug(f"Recall at @{recall} is {recall_}")
     with open(f'{save_path}/EX1_R{recall}_C{caption}_I{image}.npz', 'wb') as f:
         np.savez(f, images_output=outputs_images, images_target = output_targets, story_ids=output_ids)
-
 
 def __main__():
     # ### Load Model and Embedding Matrix
@@ -134,15 +159,15 @@ def __main__():
 
     print("-- Loading data:")
     # Load VIST dataset for experiment
-    file_path = 'VIST_expriment.json'
+    file_path = 'VIST_data_for_experiments.json'
     with open(file_path, 'r') as f:
         VIST_data = json.load(f)
     random.seed(42)
-    VIST_data  = random.sample(VIST_data,1000)
+    # VIST_data  = random.sample(VIST_data,10)
     print(f"-- Finish loading | {len(VIST_data)} stories")
 
     ## Define path to save results
-    save_path = "/home/lcur1747/fromage/results"
+    save_path = "/home/lcur1748/Fromage-dl2/src/Results"
 
     ## retrieve all stories 
     print("Retrieving stories ...")
