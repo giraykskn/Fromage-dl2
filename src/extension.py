@@ -33,7 +33,7 @@ class Experiment:
         self.use_sample = use_sample
         self.keys_for_prompt = Experiment.generate_keys(shot, way)
         self.repeats = repeat
-        
+
     @staticmethod
     def generate_keys(shots, ways):
         return utils._generate_keys(shots,ways)
@@ -46,7 +46,7 @@ class Experiment:
         for i in range(index):
             prompt = []
             # For each repeat, append it to the prompt.
-            for repeat in self.repeats:
+            for repeat in range(self.repeats):
                 for key_in_prompt in self.keys_for_prompt[:-1]:
                     # First append the image, then the caption
                     if 'caption' in key_in_prompt:
@@ -59,12 +59,11 @@ class Experiment:
             # If it is the question, we need to ask a question, put the image, and then provide answering template
             partial_prompt_image = utils.get_image_from_jpg(path=os.path.join(self.image_path, self.json[i]["question_image"]))
             prompt.append(partial_prompt_image)
-            prompt.append("What is this?")
-            prompt.append("This is a")        
+            prompt.append("Q: What is this?\nA: This is a")
             self.labels.append(self.json[i]['answer'])
             self.prompts.append(prompt)
 
-def load_experiment(shots, ways):
+def load_experiment(shots, ways, repeats):
     experiment = Experiment(shot = shots, way = ways, repeat = repeats, use_sample = False)
     experiment.load_experiment()
     return experiment
@@ -95,7 +94,7 @@ def generate_output(model, shots, ways, repeats, recall: int = 1):
 
     number_of_correct = 0
     for i, (prompt,label) in enumerate(zip(experiment.prompts, experiment.labels)):
-        if i % 50 == 0:
+        if (i % 50 == 0) and (i != 0):
             logger.warning(f"Accuracy after {i} examples is {number_of_correct / i}")
         model_outputs.append(prompt)
         output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=2, temperature=0)
