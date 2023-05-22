@@ -75,16 +75,15 @@ def generate_output(model, shots, ways, repeats):
     """
     Inputs:
             model -- FROMAGE model
-            data -- open ended miniImage dataset
-            caption -- how many previous captions to input
-            image -- how many previous images to input
+            shots -- number of images per caption
+            ways -- amount of captions
             repeats -- how many repeats
 
     Return: generated output
     """
 
 
-    ## Inferecing
+    ## Inferencing
     experiment = load_experiment(shots = shots, ways = ways, repeats = repeats)
     model_outputs = []
     logger.info("Finished loading the experiment, inferencing with the fromage model")
@@ -112,18 +111,15 @@ def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2, repeats
     Inputs:
             model -- FROMAGE model
             save_path -- path to save results
-            data -- story sequences from open-mi
             shots -- how many shots of images
             ways -- how many different categories of images used
-
-    Return: generated images and correponding story id
+            repeats -- how many repeats
     """
     model_outputs = generate_output(model=model, shots=shots, ways=ways, repeats= repeats)
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    # TODO: make it save the prompt with the output (for now it only saves the npz files in the correct folder)
     ## Save results in npz file
     with open(f'{save_path}/extension_shots_{shots}_ways_{ways}_repeats_{repeats}.pkl', 'wb') as f:
         pickle.dump(model_outputs,f)
@@ -143,8 +139,7 @@ def __main__(number_of_ways, number_of_shots, number_of_repeats, file_name):
     ## Define path to save results
     save_path = "results/extension/"
 
-    # TODO: make commands to run all combinations of experiments
-    logger.info(f"--- Experiment ongoing - 1 shot...")
+    logger.info(f"--- Experiment ongoing - {number_of_shots} shots, {number_of_ways} ways")
     run_experiment(model=model, save_path=save_path, shots=number_of_shots, ways=number_of_ways,repeats = number_of_repeats)
     logger.info(f"--- Experiment finished")
 
