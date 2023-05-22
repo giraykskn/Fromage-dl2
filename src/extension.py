@@ -14,19 +14,15 @@ from fromage import utils
 import logging
 import time
 import pickle
+import argparse
+
 
 # Create a logger
 logger = logging.getLogger('my_logger')
 # Set the logging level (optional)
 logger.setLevel(logging.DEBUG)
 # create a file handler
-file_handler = logging.FileHandler('my_log.log')
 # Set the format for log messages
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(formatter)
-# Add the file handler to the logger
-logger.addHandler(file_handler)   
-
 class Experiment:
     def __init__(self, shot, way, use_sample=False):
         self.image_path = 'datasets/open_ended_mi/'
@@ -37,9 +33,11 @@ class Experiment:
         logger.info(f"Loaded the json file: {path}")
         self.use_sample = use_sample
         self.keys_for_prompt = Experiment.generate_keys(shot, way)
+
     @staticmethod
     def generate_keys(shots, ways):
         return utils._generate_keys(shots,ways)
+
     def load_experiment(self):
         logger.info("Loading the experiments")
         self.prompts = []
@@ -65,8 +63,6 @@ class Experiment:
                         # Otherwise, we just put the image.
                         prompt.append(partial_prompt_image)
                 
-            logger.debug(self.json[i])
-            logger.debug(prompt)
             self.labels.append(self.json[i]['answer'])
             self.prompts.append(prompt)
 
@@ -104,8 +100,6 @@ def generate_output(model, shots, ways, recall: int = 1):
         model_outputs.append(prompt)
         output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=2, temperature=0)
         model_outputs.append(output)
-        logger.debug(label)
-        logger.debug(output)
         number_of_correct += int(label in output[0])
 
     end_time = time.time()
@@ -144,11 +138,16 @@ def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2,  recall
         pickle.dump(model_outputs,f)
 
 
-def __main__():
+def __main__(number_of_ways, number_of_shots, file_name):
     # ### Load Model and Embedding Matrix
     # Load model used in the paper.
     model_dir = './fromage_model/'
     model = models.load_fromage(model_dir)
+    # Define the logger to log experiments.
+    file_handler = logging.FileHandler('file_name')
+    logger.addHandler(file_handler)   
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
 
     ## Define path to save results
     save_path = "Results/Extension/"
@@ -158,9 +157,14 @@ def __main__():
 
     # TODO: make commands to run all combinations of experiments
     logger.info(f"--- Experiment ongoing - 1 shot...")
-    run_experiment(model=model, save_path=save_path, shots=5, ways=2, recall=recall[0])
+    run_experiment(model=model, save_path=save_path, shots=number_of_shots, ways=number_of_ways, recall=recall[0])
     logger.info(f"--- Experiment finished")
 
 
 if __name__ == "__main__":
-    __main__()
+    parser = argparse.ArgumentParser(description="Process number of ways and number of shots.")
+    parser.add_argument("-w", "--ways", type=int, help="Number of ways")
+    parser.add_argument("-s", "--shots", type=int, help="Number of shots")
+    parser.add_argument("-f", "--file", type=str, help="File name to save the log")
+    args = parser.parse_args()
+    __main__(args.ways, args.shots, args.file)
