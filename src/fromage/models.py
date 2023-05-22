@@ -509,7 +509,6 @@ class Fromage(nn.Module):
         visual_embs = self.model.get_visual_embs(pixel_values, mode='captioning')  # (1, n_visual_tokens, D)
         input_embs.append(visual_embs)
       elif type(p) == str:
-        print('PROMPT FROM MODEL: ', p)
         text_ids = self.model.tokenizer(p, add_special_tokens=True, return_tensors="pt").input_ids.to(self.model.logit_scale.device)
         if not add_bos:
           # Remove <bos> tag.
