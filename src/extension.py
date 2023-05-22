@@ -5,6 +5,7 @@ import numpy as np
 import os
 import json
 from transformers import logging
+import itertools
 import matplotlib.pyplot as plt
 
 logging.set_verbosity_error()
@@ -17,8 +18,9 @@ from fromage import models
 from fromage import utils
 
 
+
 ## FUNCTION OF MODEL RETRIEVING IMAGES
-def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
+def generate_output(model, shots: int = 1, ways: int = 2):
     """
     This function reproduces experiments for the following settings:
     1. inputs 1 shot
@@ -34,14 +36,14 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
     Return: generated images and correponding story id
     """
 
-    sample_examples = 500
     image_path = 'datasets/open_ended_mi/'
     json_path = ''
 
     prompts = []
     keys_for_prompt = []
+    labels = []
+    inputs = []
 
-    # TODO: include the other json files as json_path and keys_for_prompt => add other if-statements
 
     # ATTENTION: the keys_for_prompt should be in the format 'caption, image, caption, image...' with
     # 'question' and 'question_image' at the end
@@ -115,7 +117,7 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
     # TODO: make this for loop take random samples (the amount of sample_examples) since now it takes just the first 500
 
     # TODO: set seed so it takes the same random samples every time
-    for i in range(15):
+    for i in range(10):
         prompt = []
         for key_in_prompt in keys_for_prompt:
             if ('caption' in key_in_prompt) or (key_in_prompt == 'question'):
@@ -127,45 +129,46 @@ def generate_output(model, shots: int = 1, ways: int = 2, recall: int = 1):
                 prompt.append(partial_prompt_image)
 
         prompts.append(prompt)
+        labels.append(open_ended_data[i]["answer"])
+        inputs.append(open_ended_data[i]["question_id"])
+    print(labels)
 
     ## Inferecing
-    model_outputs = []  # size=(num_story*recall)
+    generated = []
     for i, prompt in enumerate(prompts):
-        model_outputs.append(prompt)
-        output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=256, temperature=1.5)
-        model_outputs.append(output)
+        print("-------------" + str(i + 1) + "---------------")
+        output = model.generate_for_images_and_texts(prompt, max_num_rets=0,  num_words=5, temperature=0)
+        generated.append(output)
         print('output: ', output)
-
-    return model_outputs
+    correct = 0
+    for i, label in enumerate(labels):
+        if label in generated[i][0]:
+            correct += 1
+    print(f"Accuracy for {shots} shots and {ways} ways: ", correct / len(generated))
+    return inputs, generated, labels
 
 
 ## MAIN FUCNTION TO RUN EXPERIMENTS AND STORE OUTPUTS
-def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2,  recall: int = 1):
+def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2):
     """
-    This function reproduces experiments for the following settings:
-    1. inputs with 1 caption
-    2. inputs with 5 captions
-    3. inputs with 5 captions and 4 images
-
     Inputs:
             model -- FROMAGE model
             save_path -- path to save results
-            data -- story sequences from VIST (5 images + 5 captions for each story sequence)
-            caption -- how many previous captions to input
-            image -- how many previous images to input
-            recall -- represents k in recall
+            data -- story sequences from open-mi
+            shots -- how many shots of images
+            ways -- how many different categories of images used
 
     Return: generated images and correponding story id
     """
-    model_outputs = generate_output(model=model, shots=shots, ways=ways, recall=recall)
+    inputs, generated, labels = generate_output(model=model, shots=shots, ways=ways)
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
     # TODO: make it save the prompt with the output (for now it only saves the npz files in the correct folder)
     ## Save results in npz file
-    with open(f'{save_path}/extension_shots{shot}_ways{ways}_recall{recall}.npz', 'wb') as f:
-        np.savez(f, images=model_outputs)
+    with open(f'{save_path}/extension_shots{shots}_ways{ways}.npz', 'wb') as f:
+        np.savez(f, inputs=np.array(inputs), generated=np.array(generated), labels=np.array(labels))
 
 
 def __main__():
@@ -178,12 +181,20 @@ def __main__():
     save_path = "Results/Extension/"
 
     ## Define experiment configurations
-    recall = [1, 5, 10]
+    shots = [1, 3, 5]
+    ways = [2, 5]
+    config_combinations = list(itertools.product(shots, ways))
 
-    # TODO: make commands to run all combinations of experiments
-    print(f"--- Experiment ongoing - 1 shot...")
-    run_experiment(model=model, save_path=save_path, shots=5, ways=2, recall=recall[0])
-    print(f"--- Experiment finished")
+    # Test experiment
+    """print(f"--- Experiment ongoing - 1 shot...")
+    run_experiment(model=model, save_path=save_path, shots=5, ways=2)
+    print(f"--- Experiment finished")"""
+    
+    # Run all experiments
+    for config in config_combinations:
+        print(f"--- Experiment ongoing - {config[0]} shots with {config[1]} ways...")
+        run_experiment(model=model, save_path="extension_results", shots=config[0], ways=config[1])
+        print(f"--- Experiment finished")
 
 
 
