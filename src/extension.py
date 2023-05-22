@@ -94,12 +94,11 @@ def generate_output(model, shots, ways, repeats, recall: int = 1):
 
     number_of_correct = 0
     for i, (prompt,label) in enumerate(zip(experiment.prompts, experiment.labels)):
-        if (i % 50 == 0) and (i != 0):
+        if (i % 200 == 0) and (i != 0):
             logger.warning(f"Accuracy after {i} examples is {number_of_correct / i}")
         model_outputs.append(prompt)
         output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=2, temperature=0)
         model_outputs.append(output)
-        logger.info("Output from model is : {}, target is : {}".format(output, label))
         number_of_correct += int(label in output[0])
 
     end_time = time.time()

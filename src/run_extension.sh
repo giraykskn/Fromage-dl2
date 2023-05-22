@@ -1,5 +1,5 @@
 ways=(2 5)
-shots=(1 3 5)
+shots=(3 5)
 repeats=(1 3 5)
 
 # For each model run the python script for lstm leakage.

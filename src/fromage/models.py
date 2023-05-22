@@ -604,7 +604,7 @@ class Fromage(nn.Module):
 def load_fromage(model_dir: str) -> Fromage:
   model_args_path = os.path.join(model_dir, 'model_args.json')
   model_ckpt_path = os.path.join(model_dir, 'pretrained_ckpt.pth.tar')
-  embs_paths = [s for s in glob.glob(os.path.join(model_dir, 'cc3m_embeddings*.pkl'))]
+  embs_paths = [s for s in glob.glob(os.path.join(model_dir, 'cc3m_embeddings_partial.pkl'))]
 
   if not os.path.exists(model_args_path):
     raise ValueError(f'model_args.json does not exist in {model_dir}.')

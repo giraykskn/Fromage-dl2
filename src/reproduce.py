@@ -70,7 +70,7 @@ def generate_output(model, stories:list, caption:int=1, image:int=0, recall:int=
         prompt_captions = story[1][-caption:]
         prompt_captions[-1] = f"{prompt_captions[-1]}[RET]"
         story_id = story[2]
-        prompt = [item for pair in zip_longest(prompt_images, prompt_captions, fillvalue=None) for item in pair if item is not None]
+        prompt = [item for pair in zip_longest(prompt_captions, prompt_images, fillvalue=None) for item in pair if item is not None]
         ## add it to the prompt lists
         targets.append(target_image)
         story_ids.append(story_id)
@@ -87,9 +87,6 @@ def generate_output(model, stories:list, caption:int=1, image:int=0, recall:int=
             output_ids.append(story_ids[i])
         else:
             print(f"Story {story_ids[i]} has invalid images")
-        logger.debug("Inference Prompt {}".format(prompt))
-        logger.debug("Output From the model : {}".format(output))
-        logger.debug("The target : {}".format(targets[i]))
     return outputs_images, output_targets, output_ids 
 
 
@@ -145,6 +142,7 @@ def run_experiment(model, save_path:str, VIST_data:list, caption:int=1, image:in
             # If we have predicted_image == target_image then add one to the recall
             if np.array_equal(target_image, predicted_image):
                 recall_ += 1
+                break
             
 
     logger.debug(f"Length of output images: {len(outputs_images)}, shape of the first image: {outputs_images[0][0].shape}")
@@ -165,7 +163,7 @@ def __main__():
     with open(file_path, 'r') as f:
         VIST_data = json.load(f)
     random.seed(42)
-    VIST_data  = random.sample(VIST_data,10)
+    # VIST_data  = random.sample(VIST_data,10)
     print(f"-- Finish loading | {len(VIST_data)} stories")
 
     ## Define path to save results
