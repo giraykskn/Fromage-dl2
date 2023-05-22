@@ -21,10 +21,9 @@ import argparse
 logger = logging.getLogger('my_logger')
 # Set the logging level (optional)
 logger.setLevel(logging.DEBUG)
-# create a file handler
-# Set the format for log messages
+
 class Experiment:
-    def __init__(self, shot, way, use_sample=False):
+    def __init__(self, shot, way, repeat, use_sample=False):
         self.image_path = 'datasets/open_ended_mi/'
         logger.info(f"Running experiments with shot: {shot} and  way: {way}")
         path = f"datasets/open_ended_mi/open_ended_mi_shots_{shot}_ways_{way}_all_questions.json"
@@ -33,7 +32,8 @@ class Experiment:
         logger.info(f"Loaded the json file: {path}")
         self.use_sample = use_sample
         self.keys_for_prompt = Experiment.generate_keys(shot, way)
-
+        self.repeats = repeat
+        
     @staticmethod
     def generate_keys(shots, ways):
         return utils._generate_keys(shots,ways)
@@ -45,33 +45,32 @@ class Experiment:
         index = 15 if self.use_sample else len(self.json)
         for i in range(index):
             prompt = []
-            for key_in_prompt in self.keys_for_prompt:
-                # First append the image, then the caption
-                if ('caption' in key_in_prompt) or (key_in_prompt == 'question'):
-                    partial_prompt_text = self.json[i][key_in_prompt]
-                    prompt.append(partial_prompt_text)
-                elif 'image' in key_in_prompt:
-                    # If we have image in the keys
-                    partial_prompt_image = utils.get_image_from_jpg(path=os.path.join(self.image_path, self.json[i][key_in_prompt]))
-                    if key_in_prompt == "question_image":
-                        # If it is the question, we need to ask a question, put the image, and then provide answering template
+            # For each repeat, append it to the prompt.
+            for repeat in self.repeats:
+                for key_in_prompt in self.keys_for_prompt[:-1]:
+                    # First append the image, then the caption
+                    if 'caption' in key_in_prompt:
+                        partial_prompt_text = self.json[i][key_in_prompt]
+                        prompt.append(partial_prompt_text)
+                    elif 'image' in key_in_prompt:
+                        partial_prompt_image = utils.get_image_from_jpg(path=os.path.join(self.image_path, self.json[i][key_in_prompt]))
                         prompt.append(partial_prompt_image)
-                        prompt.append("What is this?")
-                        prompt.append("This is a")
-                    else:
-                        # Otherwise, we just put the image.
-                        prompt.append(partial_prompt_image)
-                
+            
+            # If it is the question, we need to ask a question, put the image, and then provide answering template
+            partial_prompt_image = utils.get_image_from_jpg(path=os.path.join(self.image_path, self.json[i]["question_image"]))
+            prompt.append(partial_prompt_image)
+            prompt.append("What is this?")
+            prompt.append("This is a")        
             self.labels.append(self.json[i]['answer'])
             self.prompts.append(prompt)
 
 def load_experiment(shots, ways):
-    experiment = Experiment(shot = shots, way = ways, use_sample = False)
+    experiment = Experiment(shot = shots, way = ways, repeat = repeats, use_sample = False)
     experiment.load_experiment()
     return experiment
 
 ## FUNCTION OF MODEL RETRIEVING IMAGES
-def generate_output(model, shots, ways, recall: int = 1):
+def generate_output(model, shots, ways, repeats, recall: int = 1):
     """
     This function reproduces experiments for the following settings:
     1. inputs 1 shot
@@ -89,7 +88,7 @@ def generate_output(model, shots, ways, recall: int = 1):
 
 
     ## Inferecing
-    experiment = load_experiment(shots = shots, ways = ways)
+    experiment = load_experiment(shots = shots, ways = ways, repeats = repeats)
     model_outputs = []  # size=(num_story*recall)
     logger.info("Finished loading the experiment, inferencing with the fromage model")
     start_time = time.time()
@@ -97,7 +96,7 @@ def generate_output(model, shots, ways, recall: int = 1):
     number_of_correct = 0
     for i, (prompt,label) in enumerate(zip(experiment.prompts, experiment.labels)):
         if i % 50 == 0:
-            logger.warning(f"Accuracy after {i} examples is {number_of_correct / len(experiment.prompts)}")
+            logger.warning(f"Accuracy after {i} examples is {number_of_correct / i}")
         model_outputs.append(prompt)
         output = model.generate_for_images_and_texts(prompt, max_img_per_ret=recall, num_words=2, temperature=0)
         model_outputs.append(output)
@@ -112,7 +111,7 @@ def generate_output(model, shots, ways, recall: int = 1):
 
 
 ## MAIN FUCNTION TO RUN EXPERIMENTS AND STORE OUTPUTS
-def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2,  recall: int = 1):
+def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2, repeats: int = 1, recall: int = 1):
     """
     This function reproduces experiments for the following settings:
     1. inputs with 1 caption
@@ -129,18 +128,18 @@ def run_experiment(model, save_path: str, shots: int = 1, ways: int = 2,  recall
 
     Return: generated images and correponding story id
     """
-    model_outputs = generate_output(model=model, shots=shots, ways=ways, recall=recall)
+    model_outputs = generate_output(model=model, shots=shots, ways=ways, repeats= repeats, recall=recall)
     ## Create path for the first time
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
     # TODO: make it save the prompt with the output (for now it only saves the npz files in the correct folder)
     ## Save results in npz file
-    with open(f'{save_path}/extension_shots_{shots}_ways_{ways}_recall_{recall}.pkl', 'wb') as f:
+    with open(f'{save_path}/extension_shots_{shots}_ways_{ways}_recall_{recall}_repeats_{repeats}.pkl', 'wb') as f:
         pickle.dump(model_outputs,f)
 
 
-def __main__(number_of_ways, number_of_shots, file_name):
+def __main__(number_of_ways, number_of_shots, number_of_repeats, file_name):
     # ### Load Model and Embedding Matrix
     # Load model used in the paper.
     model_dir = './fromage_model/'
@@ -159,7 +158,7 @@ def __main__(number_of_ways, number_of_shots, file_name):
 
     # TODO: make commands to run all combinations of experiments
     logger.info(f"--- Experiment ongoing - 1 shot...")
-    run_experiment(model=model, save_path=save_path, shots=number_of_shots, ways=number_of_ways, recall=recall[0])
+    run_experiment(model=model, save_path=save_path, shots=number_of_shots, ways=number_of_ways,repeats = number_of_repeats, recall=recall[0])
     logger.info(f"--- Experiment finished")
 
 
@@ -167,6 +166,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process number of ways and number of shots.")
     parser.add_argument("-w", "--ways", type=int, help="Number of ways")
     parser.add_argument("-s", "--shots", type=int, help="Number of shots")
+    parser.add_argument("-r", "--repeats", type=int, help="Number of repeats")
     parser.add_argument("-f", "--file", type=str, help="File name to save the log")
     args = parser.parse_args()
-    __main__(args.ways, args.shots, args.file)
+    __main__(args.ways, args.shots, args.repeats, args.file)

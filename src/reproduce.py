@@ -143,7 +143,7 @@ def run_experiment(model, save_path:str, VIST_data:list, caption:int=1, image:in
         # Check the predicted images for this
         for predicted_image in outputs_images[index]:
             # If we have predicted_image == target_image then add one to the recall
-            if target_image == predicted_image:
+            if np.array_equal(target_image, predicted_image):
                 recall_ += 1
             
 
