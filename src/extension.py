@@ -144,7 +144,7 @@ def __main__(number_of_ways, number_of_shots, file_name):
     model_dir = './fromage_model/'
     model = models.load_fromage(model_dir)
     # Define the logger to log experiments.
-    file_handler = logging.FileHandler('file_name')
+    file_handler = logging.FileHandler(file_name)
     logger.addHandler(file_handler)   
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     file_handler.setFormatter(formatter)
