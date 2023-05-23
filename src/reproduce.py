@@ -34,11 +34,12 @@ file_handler.setFormatter(formatter)
 
 def retrieve_story(VIST_data:list):
     stories = []
-    logger.info("Retrieving Stories from VIST Data")
     for story in VIST_data:
         story_valid = check_story(story)
-        if None not in story_valid[0]:
+        if story_valid != None:
             stories.append(story_valid) 
+        else:
+            print("invalid story") 
     return stories
 
 
@@ -95,10 +96,13 @@ def check_story(story:list):
     captions = []
     story_ids = None
     for item in story:
-        if 'url_o' in item[1].keys():
-            img = utils.get_image_from_url(item[1]['url_o'])
-        else:
-            img = utils.get_image_from_url(item[1]['url_m'])
+        try:
+            if 'url_o' in item[1].keys():
+                img = utils.get_image_from_url(item[1]['url_o'])
+            else:
+                img = utils.get_image_from_url(item[1]['url_m'])
+        except:
+            return None
         caption = item[0]['original_text']
         images.append(img)
         captions.append(caption)
