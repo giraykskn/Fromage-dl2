@@ -17,21 +17,6 @@ self.visual_model = CLIPVisionModel.from_pretrained(visual_encoder, torch_dtype=
 self.lm = torch.nn.DataParallel(self.lm, device_ids=[0, 1, 2, 3])
 self.visual_model = torch.nn.DataParallel(self.visual_model, device_ids=[0, 1, 2, 3])
 ```
-***util.py***:
-added `timeout=5` and `try & except` in `get_image_from_url` function for the same reason as some urls might not be responding therefore, to prevent model from running forever.
-if link is invalid, function returns None:
-```
-## Modified function
-def get_image_from_url(url: str):
-    try:
-      response = requests.get(url, timeout=5)
-      img = Image.open(BytesIO(response.content))
-      img = img.resize((224, 224))
-      img = img.convert('RGB')
-      return img
-    except:
-      return None
-```
 
 
 ## INSTRUCTIONS TO REPRODUCTION EXPERIMENTS
