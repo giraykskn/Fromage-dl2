@@ -122,7 +122,7 @@ def run_experiment(model, save_path:str, VIST_data:list, caption:int=1, image:in
     Inputs:
             model -- FROMAGE model
             save_path -- path to save results
-            data -- story sequences from VIST (5 images + 5 captions for each story sequence)
+            VIST_data -- story sequences from VIST (5 images + 5 captions for each story sequence)
             caption -- how many previous captions to input
             image -- how many previous images to input
             recall -- represents k in recall
