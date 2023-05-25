@@ -32,7 +32,14 @@ logger.addHandler(file_handler)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 file_handler.setFormatter(formatter)
 
+## FUNCTION TO RETRIEVE VALID STORY SEQUENCES FROM DATASET
 def retrieve_story(VIST_data:list):
+    """
+    Input: 
+        VIST_data: a list of story sequence
+    Return:
+        a list of valid stories, each story includes a list of 5 images, a list of 5 captions, and a story id
+    """
     stories = []
     for story in VIST_data:
         story_valid = check_story(story)
@@ -91,7 +98,15 @@ def generate_output(model, stories:list, caption:int=1, image:int=0, recall:int=
     return outputs_images, output_targets, output_ids 
 
 
+## FUNCTION TO CHECK IF A STORY SEQUENCE IS VALID
 def check_story(story:list):
+    """
+    Input:
+        story -- a list includes information about a story sequence
+    Return:
+        if this story has no invalid urls, returns a list of 5 images, a list of 5 captions, a story id;
+        if not, return None
+    """
     images = []
     captions = []
     story_ids = None
