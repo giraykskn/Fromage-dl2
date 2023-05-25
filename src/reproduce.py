@@ -155,7 +155,7 @@ def run_experiment(model, save_path:str, VIST_data:list, caption:int=1, image:in
     with open(f'{save_path}/EX1_R{recall}_C{caption}_I{image}.npz', 'wb') as f:
         np.savez(f, images_output=outputs_images, images_target = output_targets, story_ids=output_ids)
 
-def __main__():
+def __main__(configs:list):
     # ### Load Model and Embedding Matrix
     # Load model used in the paper.
     model_dir = './fromage_model/'
@@ -178,12 +178,14 @@ def __main__():
     stories = retrieve_story(VIST_data)
     print(f"Retrieval finished. {len(stories)} stories retrieved.")
 
-    ## Define experiment configurations
-    configs = [(1,0,1), (1,0,5), (1,0,10), (5,0,1),(5,0,5),(5,0,10),(5,4,1),(5,4,5),(5,4,10)] #e.g. (1,0,1) represents inputs with 1 caption no image at recall@1
-    for config in configs:
+        for config in configs:
         print(f"--- Experiment ongoing - caption{config[0]} / image{config[1]} / recall{config[2]}...")
         run_experiment(model, save_path, stories, config[0], config[1], config[2])
         print(f"--- Experiment finished")
 
 
-__main__()
+if __name__ == "__main__":
+    ## Define experiment configurations
+    configs = [(1,0,1), (1,0,5), (1,0,10), (5,0,1),(5,0,5),(5,0,10),(5,4,1),(5,4,5),(5,4,10)] #e.g. (1,0,1) represents inputs with 1 caption no image at recall@1
+    __main__(configs)
+    
