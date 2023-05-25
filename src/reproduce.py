@@ -131,8 +131,8 @@ def run_experiment(model, save_path:str, VIST_data:list, caption:int=1, image:in
     """
     outputs_images, output_targets, output_ids = generate_output(model, VIST_data, caption, image, recall)
     ## Create path for the first time
-    ##if not os.path.exists(save_path):
-        ##os.makedirs(save_path)
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
     ## Save results in npz file
     outputs_images = [[np.asarray(y) for y in x[1]] for x in outputs_images]
     output_targets = [np.asarray(x) for x in output_targets]
@@ -171,7 +171,7 @@ def __main__():
     print(f"-- Finish loading | {len(VIST_data)} stories")
 
     ## Define path to save results
-    save_path = "/home/lcur1748/Fromage-dl2/src/Results"
+    save_path = "/Results"
 
     ## retrieve all stories 
     print("Retrieving stories ...")
