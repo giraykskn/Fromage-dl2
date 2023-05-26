@@ -37,28 +37,38 @@ Finally, for your third contribution, which benchmark models do you plan to comp
 
 In this project, we focused on reproducing the visual storytelling experiment using the VIST dataset, as outlined in section 4.1 in the original paper. Our aim was to evaluate the FROMAGe model's ability to learn in context and transfer knowledge in a zero-shot setting. To streamline the process and save time and computational resources, we chose not to evaluate the Clip model and instead focused solely on assessing the performance of the FROMAGe model. The experiment comprised three different settings, each varying in the input provided: 1 caption, 5 captions, and 5 captions accompanied by 4 images. Since the FROMAGe model is not generative and relies on an embedding data store to match input embeddings during image retrieval, this posed a challenge. The original precomputed embeddings were cc3m embeddings, which the model was trained on. However, to ensure accurate image retrieval for this specific experiment, the model needed to encode the images from the VIST dataset as well. The paper lacked concrete instructions in this regard. To address this issue, we decided to encode the last image (target image) of each story. This ensured that each precomputed embedding corresponded to a specific story that needed to be predicted. By doing so, I ensured that the total probability across the entire test set summed to one, indicating that no precomputed embeddings were left unused. Additionally, we took the initiative to remove any duplicated target images from the dataset. This step prevented the model from retrieving multiple identical images within a single pass, leading to more diverse and meaningful results.
 
-As a result of the aforementioned ambiguities, the reproduced results deviate to some extent from those reported in the paper. Notably, in the experiments involving inputs with 1 caption and 5 captions, the recall values exhibit a consistent trend. The model performs better when provided with 5 captions compared to just 1 caption across all three recall levels. This suggests that having more context benefits the model in understanding the sequential nature of the story, thereby increasing the probability of retrieving the correct image. However, the results for the input of 5 captions and 4 images do not align with expectations. At recall@1, the performance is even worse than when the model is provided with only 1 caption at the same recall level. On the other hand, at recall@5 and recall@10, it performs better than the model with 1 caption but falls short of the performance achieved with 5 captions. Overall, all recall values surpass those reported in the paper. This difference in performance could be attributed to the construction of the precomputed embedding space. In our implementation, we encoded only the target images to serve as the model's search space. Consequently, it becomes relatively easier for the model to retrieve the correct images, potentially leading to higher recall values overall. The following examples at recall@1 illustrate the model outputs:
+As a result of the aforementioned ambiguities, the reproduced results deviate to some extent from those reported in the paper. Notably, in the experiments involving inputs with 1 caption and 5 captions, the recall values exhibit a consistent trend. The model performs better when provided with 5 captions compared to just 1 caption across all three recall levels. This suggests that having more context benefits the model in understanding the sequential nature of the story, thereby increasing the probability of retrieving the correct image. However, the results for the input of 5 captions and 4 images do not align with expectations. At recall@1, the performance is even worse than when the model is provided with only 1 caption at the same recall level. On the other hand, at recall@5 and recall@10, it performs better than the model with 1 caption but falls short of the performance achieved with 5 captions. The recall values for all three settings are depicted in the following figure:
+
+<img src="blogpost_imgs/r.png" alt="Plot" width="500" height="160">
+
+It can be seen that overall recall values surpass those reported in the paper. This difference in performance could be attributed to the construction of the precomputed embedding space. In our implementation, we encoded only the target images to serve as the model's search space. Consequently, it becomes relatively easier for the model to retrieve the correct images, potentially leading to higher recall values overall. The following example at recall@1 illustrate the model outputs:
 
 ***Original Story:***
 <img src="blogpost_imgs/Story.png" alt="Plot" width="1000" height="200">
 
-***Output -- caption 1:***
+***Output -- caption 1 / recall@1:***
 
 <img src="blogpost_imgs/Output1caption1image0recall1.png" alt="Plot" width="250" height="200">
 
-***Output -- captions 5:***
+***Output -- captions 5 / recall@1:***
 
 <img src="blogpost_imgs/Output1caption5image0recall1.png" alt="Plot" width="250" height="200">
 
-***Output -- captions 5, images 4:***
+***Output -- captions 5, images 4 / recall@1:***
 
 <img src="blogpost_imgs/Output1caption5image4recall1.png" alt="Plot" width="250" height="200">
 
-It can be seen from the previous example that model using 5 captions only has the best understanding of story context therefore the retrieved image is most similar to the ground truth while the other two retrieved the same image.
+It can be seen from the previous example that model using 5 captions only has the best understanding of story context therefore the retrieved image is most similar to the ground truth while the other two retrieved the same image. Another example to illustrate outputs at recall@5:
 
-There are a couple of potential factors that could explain the discrepancies between our reproduced results and those reported in the paper. One possible reason is the differences in the experimental settings between our reproduction and the original study. For instance, the construction of precomputed embeddings or variations in how recalls are calculated might have an impact on the outcomes. Another aspect to consider is the potential impact of dataset changes. Over time, some URLs associated with the images in the dataset may have become invalid or inaccessible. While we attempted to mitigate this issue by randomly sampling from the entire dataset for our experiments, it is still possible that these changes in the availability of certain images could have influenced the results to some degree, although the likelihood of significant impact is relatively low. Overall, it is essential to acknowledge these factors and consider them when interpreting the differences between our reproduced results and the findings presented in the original paper. The recall values for all three settings are depicted in the following figure:
+***Original Story:***
+<img src="blogpost_imgs/Story2.png" alt="Plot" width="1000" height="200">
 
-<img src="blogpost_imgs/r.png" alt="Plot" width="500" height="160">
+***Output -- captions 5 / recall@5:***
+<img src="blogpost_imgs/Output1caption5image0recall5.png" alt="Plot" width="1000" height="200">
+
+Since model can retrieve multiple images to match the taret image, the performance is expetectly better than only retrieving one iamge.
+
+There are a couple of potential factors that could explain the discrepancies between our reproduced results and those reported in the paper. One possible reason is the differences in the experimental settings between our reproduction and the original study. For instance, the construction of precomputed embeddings or variations in how recalls are calculated might have an impact on the outcomes. Another aspect to consider is the potential impact of dataset changes. Over time, some URLs associated with the images in the dataset may have become invalid or inaccessible. While we attempted to mitigate this issue by randomly sampling from the entire dataset for our experiments, it is still possible that these changes in the availability of certain images could have influenced the results to some degree, although the likelihood of significant impact is relatively low. Overall, it is essential to acknowledge these factors and consider them when interpreting the differences between our reproduced results and the findings presented in the original paper. 
 
 
 # 5. Our Novel Contribution
