@@ -61,6 +61,7 @@ Next steps:
 
 ## REPRODUCED RESULTS: UPDATE THIS PART BEFORE SUBMITTING!
 ![plot](r.png)
+
 *results can be found in this link: https://drive.google.com/drive/folders/1bS0jdp1VlxhmZ8WWy5SDGkOov98yLV06?usp=share_link
 
 The results npz files can be accessed using the following 3 keys: images_output, images_target, story_ids, representing images output by the model which is a list of lists; target images to compare with which is a list;
