@@ -27,11 +27,35 @@ Finally, for your third contribution, which benchmark models do you plan to comp
 
 # 2. Strengths 
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+1. Effective multimodal generation: 
+
+The model effectively leverages pretrained language models that are available to generate coherent captions for images and relevant multimodal dialogues, since it grounds the language models to images.
+
+2. Training Efficiency
+
+Fromage is trained by just finetuning a small set of parameters, which makes it easy to train. This makes it much easier to conduct further research on the model and the paper and the model can be applied to many specific fields like medicine, fashion etc. by finetuning again.
+
+3. Usage Versatility
+
+Fromage is applicable to many different areas, such as captioning, image-text retrieval, multimodal dialogue which shows its broad potential.
+
+4. Detailed results
+
+The paper and the code they publish are very clear, which leaves less room for misunderstanding. The background, experiment and analysis are detailed, and shows the strengths and weaknesses of the model based on what they explored.
 
 # 3. Weaknesses
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+1. Limited exploration of the model:
+
+The paper does not fully explore the capabilities in the model in terms of datasets, hyperparameters and prompting techniques. Especially the lack of datasets and hyperparameters creates concerns over the sucess of the model, makes it seem less adaptable.
+
+2. Too much reliance on pre-trained models:
+
+Since Fromage relies mostly on pre-trained models, it is difficult to understand if the results are more influenced by Fromage or the models beneath. The model also inherits all the bias and limitations of the mentioned models, which can create ethical issues.
+
+3. Limited analysis on failure:
+
+Although the research is very detailed, there is not much talk about the failures of the model and why it happens besides the appendix.
 
 # 4. Reproduction 
 
