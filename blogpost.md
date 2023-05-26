@@ -39,18 +39,18 @@ In this project, we focused on reproducing the visual storytelling experiment us
 
 As a result of the aforementioned ambiguities, the reproduced results deviate to some extent from those reported in the paper. Notably, in the experiments involving inputs with 1 caption and 5 captions, the recall values exhibit a consistent trend. The model performs better when provided with 5 captions compared to just 1 caption across all three recall levels. This suggests that having more context benefits the model in understanding the sequential nature of the story, thereby increasing the probability of retrieving the correct image. However, the results for the input of 5 captions and 4 images do not align with expectations. At recall@1, the performance is even worse than when the model is provided with only 1 caption at the same recall level. On the other hand, at recall@5 and recall@10, it performs better than the model with 1 caption but falls short of the performance achieved with 5 captions. Overall, all recall values surpass those reported in the paper. This difference in performance could be attributed to the construction of the precomputed embedding space. In our implementation, we encoded only the target images to serve as the model's search space. Consequently, it becomes relatively easier for the model to retrieve the correct images, potentially leading to higher recall values overall. The following examples at recall@1 illustrate the model outputs:
 
-***Original Story***
+***Original Story:***
 <img src="blogpost_imgs/Story.png" alt="Plot" width="1000" height="200">
 
-***Output -- caption 1***
+***Output -- caption 1:***
 
 <img src="blogpost_imgs/Output1caption1image0recall1.png" alt="Plot" width="250" height="200">
 
-***Output -- captions 5***
+***Output -- captions 5:***
 
 <img src="blogpost_imgs/Output1caption5image0recall1.png" alt="Plot" width="250" height="200">
 
-***Output -- captions 5, images 4***
+***Output -- captions 5, images 4:***
 
 <img src="blogpost_imgs/Output1caption5image4recall1.png" alt="Plot" width="250" height="200">
 
