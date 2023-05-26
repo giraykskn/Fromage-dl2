@@ -10,7 +10,7 @@ The paper builds on the shortcomings and prior knowledge that previous work has 
 
 The FROMAGE model is tested using multi-modal tasks, such as image retrieval and image captioning. The results provide evidence that this method is not only feasible for multi-modal learning, but it also maintains the existing capabilities of pre-trained text-only LLMs, such as in-context learning and greater sensitivity to input context. FROMAGE can use the additional descriptions to improve retrieval accuracy (9.0 to 10.4 on R@1). When prompted with the full multimodal context (i.e., 5 images and 4 stories), the model can learn in-context to synthesize plausible story-like text.
 
-The potential of in-context learning piqued our interest, and we decided to explore prompting techniques to exploit the in-context learning capabilities of the FROMAGE model using few-shot learning. A. Beygelzimer et al. (2021) suggested that their work should be seen as a starting point or baseline for the area of research of multimodal few-shot learning. Therefore, we use this paper as a reference for our few-shot learning procedure. In this work, we aim to quantify to what extent the FROMAGE model can adapt to novel and out-of-domain tasks rapidly. Furthermore, we aim to verify that prompting with both visual and language information in few-shot learning is strictly more effective than prompting with language alone.
+The potential of in-context learning piqued our interest, and we decided to explore prompting techniques to exploit the in-context learning capabilities of the FROMAGE model using few-shot learning. Tsimpoukelli et al. (2021) suggested that their work should be seen as a starting point or baseline for the area of research of multimodal few-shot learning. Therefore, we use this paper as a reference for our few-shot learning procedure. In this work, we aim to quantify to what extent the FROMAGE model can adapt to novel and out-of-domain tasks rapidly. Furthermore, we aim to verify that prompting with both visual and language information in few-shot learning is strictly more effective than prompting with language alone.
 
 Our contributions are as follows:
 
@@ -115,16 +115,6 @@ If time allows, we will also experiment with the model retrieving an image (inst
 
 # REFERENCES:
 
-@inproceedings{
-tsimpoukelli2021multimodal,
-title={Multimodal Few-Shot Learning with Frozen Language Models},
-author={Maria Tsimpoukelli and Jacob Menick and Serkan Cabi and S. M. Ali Eslami and Oriol Vinyals and Felix Hill},
-booktitle={Advances in Neural Information Processing Systems},
-editor={A. Beygelzimer and Y. Dauphin and P. Liang and J. Wortman Vaughan},
-year={2021},
-url={https://openreview.net/forum?id=WtmMyno9Tq2}
-}
-
-
+Tsimpoukelli, M., Menick, J., Cabi, S., Eslami, S. M. A., Vinyals, O., & Hill, F. (2021). Multimodal Few-Shot Learning with Frozen Language Models. In Neural Information Processing Systems (Vol. 34). https://proceedings.neurips.cc/paper/2021/file/01b7575c38dac42f3cfb7d500438b875-Paper.pdf
 
 
