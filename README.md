@@ -60,19 +60,7 @@ Next steps:
 
 
 ## REPRODUCED RESULTS: UPDATE THIS PART BEFORE SUBMITTING!
-Results (recall) of reproduced experiments are as follows:
-```
-1 caption without images at recall@1:   0.15
-1 caption without images at recall@5:   0.24
-1 caption without images at recall@10:  0.30
-5 captions without images at recall@1:  0.21
-5 captions without images at recall@5:  0.32
-5 captions without images at recall@10: 0.41
-5 captions with 4 images at recall@1:   0.17
-5 captions with 4 images at recall@5:   0.25
-5 captions with 4 images at recall@10:  0.34
-```
-*Recalls for inputs with images are not as expected. They should have been higher than all other scores.* 
+![plot](r.png)
 *results can be found in this link: https://drive.google.com/drive/folders/1bS0jdp1VlxhmZ8WWy5SDGkOov98yLV06?usp=share_link
 
 The results npz files can be accessed using the following 3 keys: images_output, images_target, story_ids, representing images output by the model which is a list of lists; target images to compare with which is a list;
