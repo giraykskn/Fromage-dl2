@@ -70,6 +70,8 @@ Since model can retrieve multiple images to match the taret image, the performan
 
 There are a couple of potential factors that could explain the discrepancies between our reproduced results and those reported in the paper. One possible reason is the differences in the experimental settings between our reproduction and the original study. For instance, the construction of precomputed embeddings or variations in how recalls are calculated might have an impact on the outcomes. Another aspect to consider is the potential impact of dataset changes. Over time, some URLs associated with the images in the dataset may have become invalid or inaccessible. While we attempted to mitigate this issue by randomly sampling from the entire dataset for our experiments, it is still possible that these changes in the availability of certain images could have influenced the results to some degree, although the likelihood of significant impact is relatively low. Overall, it is essential to acknowledge these factors and consider them when interpreting the differences between our reproduced results and the findings presented in the original paper. 
 
+In conclusion, the FROMAGe model demonstrates a certain degree of effectiveness in contextual learning and zero-shot transfer. Despite the discrepancies observed in the reproduced results, the model generally performs well on the test dataset. For future investigations, it would be valuable to explore the model's capabilities using alternative datasets to assess its similar abilities in different contexts.
+
 
 # 5. Our Novel Contribution
 
