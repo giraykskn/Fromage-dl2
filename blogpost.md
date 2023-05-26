@@ -81,7 +81,11 @@ To test if the FROMAGe model can perform in-context learning we take inspiration
 
 If time allows, we will also experiment with the model retrieving an image (instead of a caption) of a 'dax' for example. 
 
-# 6. Conclusion
+# 6. Results
+
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+
+# 7. Conclusion
 
 ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
 
