@@ -109,7 +109,7 @@ To test if the FROMAGe model can perform in-context learning, our inspiration is
 
 # 7. Conclusion
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+In conclusion, the experiment of performing few-shot learning on the FROMAGE model using open ended miniiamgenet dataset has yielded quite promising results and demonstrated the model's ability to quickly adapt to new tasks with minimal labeled data. By leveraging the power of transfer learning and meta-learning techniques, the FROMAGE model showcased good generalization capabilities and the capacity to acquire new knowledge efficiently. The model's performance on unseen tasks improved significantly after exposure to just a few examples, showcasing its potential for practical applications in scenarios where limited labeled data is available. This experiment highlights the importance of exploring innovative approaches like few-shot learning to tackle the data scarcity challenge in machine learning and paves the way for further advancements in this field. With continued research and refinement, the FROMAGE model and similar few-shot learning approaches hold the promise of enhancing the flexibility and adaptability of AI systems in various domains.
 
 # REFERENCES:
 
