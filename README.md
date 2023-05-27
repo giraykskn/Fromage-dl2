@@ -77,7 +77,7 @@ Next steps:
 
 
 
-## REPRODUCED RESULTS: UPDATE THIS PART BEFORE SUBMITTING!
+## REPRODUCED RESULTS
 ![plot](blogpost_imgs/r.png)
 
 *results can be found in this link: https://drive.google.com/drive/folders/1bS0jdp1VlxhmZ8WWy5SDGkOov98yLV06?usp=share_link
