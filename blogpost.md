@@ -86,7 +86,7 @@ The paper and the code they publish are very clear, which leaves less room for m
 
 1. Limited exploration of the model:
 
-The paper does not fully explore the capabilities in the model in terms of datasets, hyperparameters and prompting techniques. Especially the lack of datasets and hyperparameters creates concerns over the sucess of the model, makes it seem less adaptable.
+The paper does not fully explore the capabilities in the model in terms of datasets, hyperparameters and prompting techniques. Especially the lack of datasets and hyperparameters create concerns over the success of the model, makes it seem less adaptable.
 
 2. Too much reliance on pre-trained models:
 
@@ -101,16 +101,19 @@ Although the research is very detailed, there is not much talk about the failure
 
 ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Change this. include the example prompt - it is already in the github in the folder blogpost_imgs`
 
-Our contributions are as follows:
+After experimenting with the model to reproduce the results in the original paper, we make a novel contribution with the FROMAGe model. Our contribution is to further test the multimodal few-shot learning capabilities of FROMAGe on the Open-ended MiniImageNet dataset that we obtain from the paper “Multimodal Few-Shot Learning with Frozen Language Models” [4]. We do this in order to address the limitation of the exploration range of the model. The Open-ended MiniImageNet dataset consists of images and their corresponding captions. Along with a new dataset, the following terminology is introduced in Frozen:
 
-1. Test the few-shot learning capabilities of the FROMAGe model in a multimodal setting.
+Task induction : Include a preceding explanatory text (before the images and captions), in order to enhance the prompt of the model. Variations we use: [yes, no]
+Ways: Represent the distinct categories to be classified Variations we use: [2,5]
+Inner-shots: An example given to each category which includes the image and its caption. Variations we use: [1,3,5]
+Repeats: The number of times each example (inner-shot) is repeated in the prompt. Variations we use: [0,2,4] 
 
-2. Further analyze the multimodal vs. text-only few-shot learning capabilities of the FROMAGe model.
+FROMAGe model is able to handle multimodal settings and perform few-shot classification, as we can also see from the reproduction results. However, the significance of the new dataset is that it contains words that do not have meanings for the image captions. The model was not trained on these words. They are given as “dax” or “blicket” in the 2-way scenario and three more meaningless words, “shously”, “slation” and “perpo”, are added to those in the 5-way scenario. We apply FROMAGe on this dataset in order to observe if the model is able to learn those new words (perform in-context learning) along with the images, and output the related one when prompted with the final question caption “What is this?This is a”. Essentially, the model needs to learn to override its previously known information with the new words. To fully understand this, we provide an example prompt with the base setting we use: 
 
-3. Compare the FROMAGe model to existing benchmark models and quantify the differences.
+EXAMPLE PROMPT IMAGE
 
+Besides the base setting, we also experiment with prompts of different lengths (for instance, only “dax” as the caption prompt instead of “This is a dax”).  We further observe different outcomes by changing the amount of words that are expected to be returned by the model and different temperature parameters. With those we do not see improvements so we do not base our evaluations on that and opted for other variations of the four parameters to continue with our experiments. Repeats of the captions were a part of the experiments done in the original paper of the Frozen model which we also include in our experiments. We do the first part of our experiments without the task induction. In the second part of our experiments, we also use task induction by adding the texts “Answer with dax or blicket” for the 2-way scenario and “Answer with dax or blicket or shously or slation or perpo”. Finally, we report the results with the different variations in Section 4.
 
-To test if the FROMAGe model can perform in-context learning, our inspiration is Tsimpoukelli et al. (2021)(Figure 4). We use their dataset - Open Ended Mini ImageNet. It consists of images and their corresponding captions. The interesting part is the captions containing words without meanings such as “dax” or “blicket”. In order to observe if the model is able to learn those words, we experiment with the different variants in the dataset. They are the variants of few-shot learning, and the dataset that we use has 1,3,5 inner-shots, along with 2 and 5 ways. We use this setting as introduced in the Frozen language model by Tsimpoukelli et al. (2021). The ways represent the number of categories (dog vs cat) and the inner-shots are used to show the amount of distinct examples given to the model per category. We apply the same technique meaning that it is possible to experiment with 1,3 or 5 images of dax or 1,3 or 5 images of blickets as the input prompt. We do this experiment to see if FROMAGe is able to perform in-context learning using a few-shot prompt. We also experiment with prompts of different lengths (only “dax” as a prompt for instance), the amount of words that are expected to be returned by the model and different temperature parameters. Another variation we try is repeating the same prompt, the number of inner-shots that are repeated when giving them to the model. We observe that with 5 repetitions, no matter how many inner-shots or ways are given, it is possible to observe higher accuracy in the outcome of the model learning a meaningless word and being able to output the correct image/caption pair for that. 
 
 # 4. Results
 In the following section we presents the experiments we performed with varying the four different parameters - task induction, ways, inner-shots and repeats. The results for 2 ways with different inner-shots, repeats and task induction is presented in the following table: 
