@@ -21,14 +21,16 @@ This could be attributed to the increased input length, which caused the model t
 
 Our contributions are as follows:
 
-Test the few-shot learning capabilities of the FROMAGE model in a multimodal setting.
-Further analyze the multimodal vs. text-only few-shot learning capabilities of the FROMAGE model.
-Compare the FROMAGE model to existing benchmark models and quantify the differences.
+1. Test the few-shot learning capabilities of the FROMAGE model in a multimodal setting.
 
-Regarding your second contribution, comparing the multimodal and text-only few-shot learning capabilities of FROMAGE, what do you expect to find? Do you anticipate that the model will perform better with multimodal prompts, or do you think that language prompts alone will be sufficient for few-shot learning?
+2. Further analyze the multimodal vs. text-only few-shot learning capabilities of the FROMAGE model.
+
+3. Compare the FROMAGE model to existing benchmark models and quantify the differences.
+
+<!-- Regarding your second contribution, comparing the multimodal and text-only few-shot learning capabilities of FROMAGE, what do you expect to find? Do you anticipate that the model will perform better with multimodal prompts, or do you think that language prompts alone will be sufficient for few-shot learning?
 
 Finally, for your third contribution, which benchmark models do you plan to compare FROMAGE against? What metrics will you use to evaluate performance?
-]
+] -->
 
 # 2. Strengths 
 
