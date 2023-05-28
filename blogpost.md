@@ -112,7 +112,32 @@ To test if the FROMAGe model can perform in-context learning, our inspiration is
 
 # 4. Results
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Change the names in the 5 ways table.`
+
+In the following section we presents the experiments we performed with varying the four different parameters - task induction, ways, inner shots and repeats. The results for 2 ways with different inner shots, repeats and task induction is presented in the following table: 
+
+|2 way| | | | | | | | | | | | | | |
+|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|
+|Task induction|no|no|no|no|no|no|no|no|no|yes|yes|yes|yes|yes|
+|Inner Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
+|Repeats|0|2|4|0|2|4|0|2|4|0|0|0|2|4|
+|Frozen|29.0|-|-|-|-|-|-|-|-|53.4|57.9|58.9|-|-|
+|FROMAGe|8.3|25.7|33.9|27.5|42.6|40.9|39.3|42.4|37.0|9.8|31.1|42.0|28.3|35.8|
+
+From the table we see that the parameter task induction improves the performance of FROMAGe a little but not significantly. For 1 inner shot, 0, 2 and 4 repeats it improves by 2%. Hence, this does not help the model to fast-bind the two new given classes. However, with increasing the repeats for 1 shot, we observe a huge improvement - from 8.3% (with 0 repeats) to 25.7% (with 2 repeats) and 33.9% (with 4 repeats). Additionally, when we increase the number of inner shots, the accuracy also increases with up to 42.6% with 3 shots and 2 repeats. We can also see that with more inner shots, the amount of repeats is not crucial and even decreases the performance - for example with 3 inner shots and 4 repeats, the accuracy is lower than with 3 inner shots and 2 repeats. The exact same situation happens with 5 inner shots, 4 repeats and 5 inner shots 2 repeats. We attribute this to the fact that it is possible FROMAGe cannot handle too long prompts. For this reason the best performance is with 3 inner shots and 2 repeats - a good balance between the amount of inner shots and repeats. 
+
+Similar trends can be observed in the results for 5 ways: 
+
+|5 way| | | | | | | | | | | | | | |
+|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|
+|Task induction|no|no|no|no|no|no|no|no|no|yes|yes|yes|yes|yes|
+|Inner Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
+|Repeats|0|2|4|0|2|4|0|2|4|0|0|0|2|4|
+|Frozen|18.0|-|-|-|-|-|-|-|-|20.2|22.3|21.3|-|-|
+|FROMAGe|1.6|2.5|2.4|2.7|1.0|0.0|3.6|0.0|0.0|4.0|5.0|Giray|3.0|Ilayda|
+
+Once again, the presence of task induction in the prompt helps improve the accuracy by around 2%. The prompt with 3 shots performs best with 5% accuracy. However, in both 2 and 5 ways the results of FROMAGe do not perform above chance. Additionally, when we compare FROMAGe with the baseline Frozen, it is evident that Frozen performs better. The results of Frozen with task induction are above chance and significantly higher than FROMAGe. One possible explanation for this is that FROMAGe has different pre-trained LLM and a different visual encoder than Frozen. Furthermore, while both FROMAGe and Frozen maximize the log-likelihood, Frozen also includes a visual prefix prepended to the token sequence and then maximizes the log likelihood objective. Most importantly, Frozen trains the visual encoder from scratch. In comparison, FROMAGe does not do that, it only learns a linear mapping to map the visual embeddings coming from the visual model to the language space. Hence, the visual encoder of Frozen is specifically trained for the task, while the one in FROMAGe is not.
+
 
 # 5. Conclusion
 
