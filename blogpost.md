@@ -136,7 +136,7 @@ Similar trends can be observed in the results for 5 ways:
 |Inner Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
 |Repeats|0|2|4|0|2|4|0|2|4|0|0|0|2|4|
 |Frozen|18.0|-|-|-|-|-|-|-|-|20.2|22.3|21.3|-|-|
-|FROMAGe|1.6|2.5|2.4|2.7|1.0|0.0|3.6|0.0|0.0|4.0|5.0|5.7|3.0|Ilayda|
+|FROMAGe|1.6|2.5|2.4|2.7|1.0|0.0|3.6|0.0|0.0|4.0|5.0|5.7|3.0|3.0|
 
 Once again, the presence of task induction in the prompt helps improve the accuracy by around 2%. The prompt with 3 shots performs best with 5% accuracy. However, in both 2 and 5 ways the results of FROMAGe do not perform above chance. Additionally, when we compare FROMAGe with the baseline Frozen, it is evident that Frozen performs better. The results of Frozen with task induction are above chance and significantly higher than FROMAGe. One possible explanation for this is that FROMAGe has different pre-trained LLM and a different visual encoder than Frozen. Furthermore, while both FROMAGe and Frozen maximize the log-likelihood, Frozen also includes a visual prefix prepended to the token sequence and then maximizes the log likelihood objective. Most importantly, Frozen trains the visual encoder from scratch. In comparison, FROMAGe does not do that, it only learns a linear mapping to map the visual embeddings coming from the visual model to the language space. Hence, the visual encoder of Frozen is specifically trained for the task, while the one in FROMAGe is not.
 
