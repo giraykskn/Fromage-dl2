@@ -143,7 +143,7 @@ Once again, the presence of task induction in the prompt helps improve the accur
 
 # 5. Conclusion
 
-In conclusion, although not all results are successfully reproduced due to some ambiguities in the paper, it still demonstrates the model's ability of in-context learning and zero-shot transfer ability inherited from large language models. The extension of performing few-shot learning on the FROMAGe model using open ended miniiamgenet dataset has yielded quite promising results and demonstrated the model's ability of few-shot learning and fast binding despite the discrepansies in the final accuracy scores. For future work, more datasets can be used to test similar or unexplored capbabilities of this model.
+In conclusion, although not all results are successfully reproduced due to some ambiguities in the paper, it still demonstrates the model's ability of in-context learning and zero-shot transfer ability inherited from large language models. The extension of performing few-shot learning on the FROMAGe model using Open-Ended miniImageNet dataset has yielded quite promising results and demonstrated the model's ability of few-shot learning and fast binding despite the discrepansies in the final accuracy scores. For future work, more datasets can be used to test similar or unexplored capbabilities of this model.
 
 # REFERENCES:
 
