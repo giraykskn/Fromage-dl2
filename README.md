@@ -66,7 +66,7 @@ for config in configs:
 ## INSTRUCTIONS TO EXTENSION EXPERIMENTS
 First, the dataset that was used in the extension from the paper ["Multimodal Few-Shot Learning with Frozen Language Model"](https://arxiv.org/abs/2106.13884) needs to be downloaded. The Open-Ended miniImageNet dataset can be found [here](https://fh295.github.io/frozen.html).
 
-#### Next steps:
+### Next steps:
 1. Download the dataset in ```src/datasets``` - you can do this directly by running the command in the folder
 
 ```
@@ -89,6 +89,15 @@ sbatch extension.job
 
 5. The results are saved in ```pkl``` files together with ```output logs``` showing the accuracy.
 
+
+### Parameters that could be used when executing the extension:
+1. *Task induction* : Include a preceding explanatory text (before the images and captions), in order to enhance the prompt of the model. Values we use: [yes, no]
+
+2. *Ways*: Represent the distinct categories to be classified. Values we use: [2,5]
+
+3. *Inner-shots*: An example given to each category which includes the image and its caption. Values we use: [1,3,5]
+
+4. *Repeats*: The number of times each example (inner-shot) is repeated in the prompt. Values we use: [0,2,4] 
 
 
 ## REPRODUCED RESULTS
