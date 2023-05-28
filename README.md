@@ -81,7 +81,7 @@ tar -xzf open_ended_mi.tar.gz
 ```
 
 3. Adjust the path to the own root directory in ```src/extension.py```, line 12.
-4. Run the job file for the extension ```src/extension.job```. This runs the ```src/run_extension.sh``` which performs all different combinations of experiments (shots, ways, repeats - all introduced in the paper "Multimodal Few-Shot Learning with Frozen Language Model"). You can do this by running
+4. Run the job file for the extension ```src/extension.job```. This runs the ```src/run_extension.sh``` which performs all different combinations of experiments (shots, ways, repeats, task induction - all introduced in the paper "Multimodal Few-Shot Learning with Frozen Language Model"). You can do this by running
 
 ```
 sbatch extension.job
