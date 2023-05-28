@@ -99,8 +99,6 @@ Although the research is very detailed, there is not much talk about the failure
 
 # 3. Our Novel Contribution
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Change this. include the example prompt - it is already in the github in the folder blogpost_imgs`
-
 After experimenting with the model to reproduce the results in the original paper, we make a novel contribution with the FROMAGe model. Our contribution is to further test the multimodal few-shot learning capabilities of FROMAGe on the Open-ended MiniImageNet dataset that we obtain from the paper “Multimodal Few-Shot Learning with Frozen Language Models” [4]. We do this in order to address the limitation of the exploration range of the model. The Open-ended MiniImageNet dataset consists of images and their corresponding captions. Along with a new dataset, the following terminology is introduced in Frozen:
 
 Task induction : Include a preceding explanatory text (before the images and captions), in order to enhance the prompt of the model. Variations we use: [yes, no]
