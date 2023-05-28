@@ -72,15 +72,15 @@ In conclusion, the FROMAGe model demonstrates a certain degree of effectiveness 
 
 The model effectively leverages pretrained language models that are available to generate coherent captions for images and relevant multimodal dialogues, since it grounds the language models to images.
 
-2. Training Efficiency
+2. Training efficiency:
 
 FROMAGe is trained by just finetuning a set of parameters and linearly connecting language model and visual transformer, which makes it easy to train. Although visual and text embeddings are just connected by a rather simple linear network, FROMAGe can clearly understand the contexts of images with their captions. This makes training process much faster, and getting results more efficient.
 
-3. Usage Versatility
+3. Usage versatility:
 
 FROMAGe is applicable to many different areas, such as captioning, image-text retrieval, multimodal dialogue which shows its broad potential, as it can be fine-tuned and retrained easily as talked in the previous point.
 
-4. Detailed results
+4. Detailed results:
 
 The paper and the code they publish are very clear, which leaves less room for misunderstanding. The background, experiment and analysis are detailed, and shows the strengths and weaknesses of the model based on what they explored. This makes further research on their paper and their model much easier and approachable to other researchers, and shows the researchers' dedication and passion.
 
