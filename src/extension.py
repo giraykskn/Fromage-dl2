@@ -49,22 +49,28 @@ class Experiment:
         for i in range(index):
             prompt = []
             prompt.append('Answer with dax or blicket')
+            print('here 1 ')
             # For each repeat, append it to the prompt.
-            for repeat in range(self.repeats):
+            for repeat in range(self.repeats+1):
+                print('here 2, repeat: ', repeat)
                 for key_in_prompt in self.keys_for_prompt[:-1]:
+                    print('key_in_prompt: ', key_in_prompt)
                     # First append the image, then the caption
                     if 'caption' in key_in_prompt:
                         partial_prompt_text = self.json[i][key_in_prompt]
                         prompt.append(partial_prompt_text)
+                        print('caption partial prompt: ', partial_prompt_text)
                     elif 'image' in key_in_prompt:
                         partial_prompt_image = utils.get_image_from_jpg(path=os.path.join(self.image_path, self.json[i][key_in_prompt]))
                         prompt.append(partial_prompt_image)
-            
+                        print('image partial prompt: ', partial_prompt_image)
+
+
             # If it is the question, we need to ask a question, put the image, and then provide answering template
             partial_prompt_image = utils.get_image_from_jpg(path=os.path.join(self.image_path, self.json[i]["question_image"]))
             prompt.append(partial_prompt_image)
             prompt.append("Q: What is this?\nA: This is a")
-
+            print('FINAL prompt: ', prompt)
             self.labels.append(self.json[i]['answer'])
             self.prompts.append(prompt)
 
