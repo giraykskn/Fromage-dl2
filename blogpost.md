@@ -99,7 +99,7 @@ Although the research is very detailed, there is not much talk about the failure
 
 # 3. Our Novel Contribution
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Change this.`
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Change this. include the example prompt - it is already in the github in the folder blogpost_imgs`
 
 Our contributions are as follows:
 
