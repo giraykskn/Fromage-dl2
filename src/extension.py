@@ -9,12 +9,13 @@ import itertools
 import matplotlib.pyplot as plt
 logging.set_verbosity_error()
 import sys
-sys.path.append('/home/lcur1748/Fromage-dl2')  ##change this to your folder where you put the whole project
+sys.path.append('/home/lcur1734/Fromage-dl2')  ##change this to your folder where you put the whole project
 from fromage import models
 from fromage import utils
 import logging
 import time
 import pickle
+import matplotlib.pyplot as plt
 import argparse
 
 
@@ -47,6 +48,7 @@ class Experiment:
         index = 15 if self.use_sample else len(self.json)
         for i in range(index):
             prompt = []
+            prompt.append('Answer with dax or blicket')
             # For each repeat, append it to the prompt.
             for repeat in range(self.repeats):
                 for key_in_prompt in self.keys_for_prompt[:-1]:
@@ -62,6 +64,7 @@ class Experiment:
             partial_prompt_image = utils.get_image_from_jpg(path=os.path.join(self.image_path, self.json[i]["question_image"]))
             prompt.append(partial_prompt_image)
             prompt.append("Q: What is this?\nA: This is a")
+
             self.labels.append(self.json[i]['answer'])
             self.prompts.append(prompt)
 
@@ -90,12 +93,14 @@ def generate_output(model, shots, ways, repeats):
     start_time = time.time()
 
     number_of_correct = 0
+    print('STARTING WITH THE EXPERIMENT')
     for i, (prompt,label) in enumerate(zip(experiment.prompts, experiment.labels)):
         if (i % 200 == 0) and (i != 0):
             logger.warning(f"Accuracy after {i} examples is {number_of_correct / i}")
         model_outputs.append(prompt)
         output = model.generate_for_images_and_texts(prompt, max_num_rets=0, num_words=2, temperature=0)
         model_outputs.append(output)
+
         number_of_correct += int(label in output[0])
 
     end_time = time.time()
@@ -137,7 +142,7 @@ def __main__(number_of_ways, number_of_shots, number_of_repeats, file_name):
     file_handler.setFormatter(formatter)
 
     ## Define path to save results
-    save_path = "results/extension/"
+    save_path = "Results/Extension/"
 
     logger.info(f"--- Experiment ongoing - {number_of_shots} shots, {number_of_ways} ways")
     run_experiment(model=model, save_path=save_path, shots=number_of_shots, ways=number_of_ways,repeats = number_of_repeats)

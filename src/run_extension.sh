@@ -1,17 +1,6 @@
-ways=(2 5)
-shots=(3 5)
-repeats=(1 3 5)
-
-# For each model run the python script for lstm leakage.
-for way in ${ways[@]}; do
-    for shot in ${shots[@]}; do
-        for repeat in ${repeats[@]}; do
-            echo "----------------------------"
-            echo -e "Running the extension with $way ways and $shot shots"
-            echo "----------------------------"
-            filename="output_way${way}_shot${shot}_repeat${repeat}.log"
-            echo -e "Log file name is $filename"
-            python3 -u extension.py --ways $way --shots $shot --repeats $repeat --file $filename
-        done
-    done
-done
+echo "----------------------------"
+echo -e "Running the extension with 2 ways and 1 shots and 0 repeats"
+echo "----------------------------"
+filename="output_way${2}_shot${1}_repeat${0}.log"
+echo -e "Log file name is $filename"
+python3 -u extension.py --ways 2 --shots 1 --repeats 0 --file $filename
