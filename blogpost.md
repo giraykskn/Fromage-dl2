@@ -113,24 +113,24 @@ Our contributions are as follows:
 To test if the FROMAGe model can perform in-context learning, our inspiration is Tsimpoukelli et al. (2021)(Figure 4). We use their dataset - Open Ended Mini ImageNet. It consists of images and their corresponding captions. The interesting part is the captions containing words without meanings such as “dax” or “blicket”. In order to observe if the model is able to learn those words, we experiment with the different variants in the dataset. They are the variants of few-shot learning, and the dataset that we use has 1,3,5 inner-shots, along with 2 and 5 ways. We use this setting as introduced in the Frozen language model by Tsimpoukelli et al. (2021). The ways represent the number of categories (dog vs cat) and the inner-shots are used to show the amount of distinct examples given to the model per category. We apply the same technique meaning that it is possible to experiment with 1,3 or 5 images of dax or 1,3 or 5 images of blickets as the input prompt. We do this experiment to see if FROMAGe is able to perform in-context learning using a few-shot prompt. We also experiment with prompts of different lengths (only “dax” as a prompt for instance), the amount of words that are expected to be returned by the model and different temperature parameters. Another variation we try is repeating the same prompt, the number of inner-shots that are repeated when giving them to the model. We observe that with 5 repetitions, no matter how many inner-shots or ways are given, it is possible to observe higher accuracy in the outcome of the model learning a meaningless word and being able to output the correct image/caption pair for that. 
 
 # 4. Results
-In the following section we presents the experiments we performed with varying the four different parameters - task induction, ways, inner shots and repeats. The results for 2 ways with different inner shots, repeats and task induction is presented in the following table: 
+In the following section we presents the experiments we performed with varying the four different parameters - task induction, ways, inner-shots and repeats. The results for 2 ways with different inner-shots, repeats and task induction is presented in the following table: 
 
 |2 way| | | | | | | | | | | | | | |
 |:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|
 |Task induction|no|no|no|no|no|no|no|no|no|yes|yes|yes|yes|yes|
-|Inner Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
+|Inner-Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
 |Repeats|0|2|4|0|2|4|0|2|4|0|0|0|2|4|
 |Frozen|29.0|-|-|-|-|-|-|-|-|53.4|57.9|58.9|-|-|
 |FROMAGe|8.3|25.7|33.9|27.5|42.6|40.9|39.3|42.4|37.0|9.8|31.1|42.0|28.3|35.8|
 
-From the table we see that the parameter task induction improves the performance of FROMAGe a little but not significantly. For 1 inner shot, 0, 2 and 4 repeats it improves by 2%. Hence, this does not help the model to fast-bind the two new given classes. However, with increasing the repeats for 1 shot, we observe a huge improvement - from 8.3% (with 0 repeats) to 25.7% (with 2 repeats) and 33.9% (with 4 repeats). Additionally, when we increase the number of inner shots, the accuracy also increases with up to 42.6% with 3 shots and 2 repeats. We can also see that with more inner shots, the amount of repeats is not crucial and even decreases the performance - for example with 3 inner shots and 4 repeats, the accuracy is lower than with 3 inner shots and 2 repeats. The exact same situation happens with 5 inner shots, 4 repeats and 5 inner shots 2 repeats. We attribute this to the fact that it is possible FROMAGe cannot handle too long prompts. For this reason the best performance is with 3 inner shots and 2 repeats - a good balance between the amount of inner shots and repeats. 
+From the table we see that the parameter task induction improves the performance of FROMAGe a little but not significantly. For 1 inner-shot, 0, 2 and 4 repeats it improves by 2%. Hence, this does not help the model to fast-bind the two new given classes. However, with increasing the repeats for 1 shot, we observe a huge improvement - from 8.3% (with 0 repeats) to 25.7% (with 2 repeats) and 33.9% (with 4 repeats). Additionally, when we increase the number of inner-shots, the accuracy also increases with up to 42.6% with 3 shots and 2 repeats. We can also see that with more inner-shots, the amount of repeats is not crucial and even decreases the performance - for example with 3 inner-shots and 4 repeats, the accuracy is lower than with 3 inner-shots and 2 repeats. The exact same situation happens with 5 inner-shots, 4 repeats and 5 inner-shots 2 repeats. We attribute this to the fact that it is possible FROMAGe cannot handle too long prompts. For this reason the best performance is with 3 inner-shots and 2 repeats - a good balance between the amount of inner-shots and repeats. 
 
 Similar trends can be observed in the results for 5 ways: 
 
 |5 way| | | | | | | | | | | | | | |
 |:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|
 |Task induction|no|no|no|no|no|no|no|no|no|yes|yes|yes|yes|yes|
-|Inner Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
+|Inner-Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
 |Repeats|0|2|4|0|2|4|0|2|4|0|0|0|2|4|
 |Frozen|18.0|-|-|-|-|-|-|-|-|20.2|22.3|21.3|-|-|
 |FROMAGe|1.6|2.5|2.4|2.7|1.0|0.0|3.6|0.0|0.0|4.0|5.0|5.7|3.0|3.0|
