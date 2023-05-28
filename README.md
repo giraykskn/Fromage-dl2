@@ -101,8 +101,30 @@ sbatch extension.job
 
 
 ## REPRODUCED RESULTS
-![plot](blogpost_imgs/r.png)
+| |Recall@1|Recall@5|Recall@10|
+|:----|:----|:----|:----|
+|1 caption|17.7|35.1|43.9|
+|5 captions|21.0|43.8|53.1|
+|5 captions, 4 images|16.5|37.1|46.2|
 
 Additional results can be found [here](https://drive.google.com/drive/folders/1bS0jdp1VlxhmZ8WWy5SDGkOov98yLV06?usp=share_link)
+
+## EXTENSION RESULTS
+|2 way| | | | | | | | | | | | | | |
+|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|
+|Task induction|no|no|no|no|no|no|no|no|no|yes|yes|yes|yes|yes|
+|Inner-Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
+|Repeats|0|2|4|0|2|4|0|2|4|0|0|0|2|4|
+|Frozen|29.0|-|-|-|-|-|-|-|-|53.4|57.9|58.9|-|-|
+|FROMAGe|8.3|25.7|33.9|27.5|42.6|40.9|39.3|42.4|37.0|9.8|31.1|42.0|28.3|35.8|
+
+
+|5 way| | | | | | | | | | | | | | |
+|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|:----|
+|Task induction|no|no|no|no|no|no|no|no|no|yes|yes|yes|yes|yes|
+|Inner-Shots|1|1|1|3|3|3|5|5|5|1|3|5|1|1|
+|Repeats|0|2|4|0|2|4|0|2|4|0|0|0|2|4|
+|Frozen|18.0|-|-|-|-|-|-|-|-|20.2|22.3|21.3|-|-|
+|FROMAGe|1.6|2.5|2.4|2.7|1.0|0.0|3.6|0.0|0.0|4.0|5.0|5.7|3.0|3.0|
 
 
