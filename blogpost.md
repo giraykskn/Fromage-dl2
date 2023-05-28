@@ -2,36 +2,66 @@
 
 ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Introduction: An analysis of the paper and its key components. Think about it as a nicely formatted review as you would see on OpenReview.net. It should contain one paragraph of related work as well.`
 
-Large language models (LLMs) have demonstrated impressive performance in natural language processing (NLP) tasks, but they lack the ability to utilize visual cues for learning and reasoning about the real world. Additionally, they are unable to generate images, which is a crucial aspect of multimodal communication. In this paper, a novel approach called FROMAGE is proposed, which leverages a frozen LLM and a visual encoder to enable in-context learning for multimodal tasks.
+Large language models (LLM) have demonstrated impressive performance in natural language processing (NLP) tasks, but they lack the ability to utilize visual cues for learning and reasoning about the real world. Additionally, they are unable to generate images, which is a crucial aspect of multimodal communication. A novel approach called FROMAGe [1] is proposed, which leverages a frozen LLM and a visual encoder to enable in-context learning for multimodal tasks. Our specific focus was
 
-FROMAGE uses a frozen large language model and a visual encoder. Both models can produce embeddings of different modalities separately, but they cannot interact with each other to explore multi-modal context. FROMAGE proposes a framework for creating an interaction layer between both models. The embeddings generated from the language model are mapped to the visual encoder's vector space using linear transformation to allow LLM to interact with the visual encoder. To generate an embedding for an image using the text input, they propose extending the vocabulary of LLM with the [RET] token. This represents an embedding of an image from the text input, which is learned during training to map the text space into the image space. They use the contrastive loss to learn the mapping. Moreover, with this approach, learning to generate the [RET] token for multi-modal dialogue emerges. Similar to text-visual embedding mapping, they also map the visual embedding to the text space using linear mapping. They use maximum likelihood estimation to learn the mapping.
+FROMAGe uses a frozen LLM and a visual encoder. Both models can produce embeddings of different modalities separately, but they cannot interact with each other to explore multi-modal context. FROMAGe proposes a framework for creating an interaction layer between both models. The embeddings generated from the language model are mapped to the visual encoder's vector space using linear transformation to allow LLM to interact with the visual encoder. To generate an embedding for an image using the text input, they propose extending the vocabulary of LLM with the [RET] token. This represents an embedding of an image from the text input, which is learned during training to map the text space into the image space. They use the contrastive loss to learn the mapping. Moreover, with this approach, learning to generate the [RET] token for multi-modal dialogue emerges. Similar to text-visual embedding mapping, they also map the visual embedding to the text space using linear mapping. They use maximum likelihood estimation to learn the mapping.
 
-The paper builds on the shortcomings and prior knowledge that previous work has provided. For example, Flamingo (Alayrac et al., 2022) proposed a visual language model for text generation; however, Flamingo cannot generate images. LIMBeR (Merullo et al., 2022) analyzes pretrained vision and language models and finds that learned representations are functionally equivalent up to a linear transform. Therefore, the authors propose to learn linear mappings for both modalities to be able to generate images while reasoning in a multi-modal setting.
+The paper builds on the shortcomings and prior knowledge that previous work has provided. For example, Flamingo [2] proposed a visual language model for text generation; however, Flamingo cannot generate images. LIMBeR [3] analyzes pretrained vision and language models and finds that learned representations are functionally equivalent up to a linear transform. Therefore, the authors propose to learn linear mappings for both modalities to be able to generate images while reasoning in a multi-modal setting.
 
-The FROMAGE model is tested using multi-modal tasks, such as image retrieval and image captioning. The results provide evidence that this method is not only feasible for multi-modal learning, but it also maintains the existing capabilities of pre-trained text-only LLMs, such as in-context learning and greater sensitivity to input context. FROMAGE can use the additional descriptions to improve retrieval accuracy (9.0 to 10.4 on R@1). When prompted with the full multimodal context (i.e., 5 images and 4 stories), the model can learn in-context to synthesize plausible story-like text.
+The FROMAGe model is tested using multi-modal tasks, such as image retrieval and image captioning. The results provide evidence that this method is not only feasible for multi-modal learning, but it also maintains the existing capabilities of pre-trained text-only LLMs, such as in-context learning and greater sensitivity to input context. FROMAGe can use the additional descriptions to improve retrieval accuracy (9.0 to 10.4 on R@1). When prompted with the full multimodal context (i.e., 5 images and 4 stories), the model can learn in-context to synthesize plausible story-like text. We decided to reproduce image retrieval experiment to further explore the claims made by the FROMAGe paper and gain an understanding of the in-context learning capabilities with multi modal context.
 
-The potential of in-context learning piqued our interest, and we decided to explore prompting techniques to exploit the in-context learning capabilities of the FROMAGE model using few-shot learning. A. Beygelzimer et al. (2021) suggested that their work should be seen as a starting point or baseline for the area of research of multimodal few-shot learning. Therefore, we use this paper as a reference for our few-shot learning procedure. In this work, we aim to quantify to what extent the FROMAGE model can adapt to novel and out-of-domain tasks rapidly. Furthermore, we aim to verify that prompting with both visual and language information in few-shot learning is strictly more effective than prompting with language alone.
+In our reproduction we had three different settings, 1 caption, 5 captions, and 5 captions and 4 images. Unlike the claims made by the paper, we found that including 4 images and 5 captions lead to lower recall than 5 captions. We explore the possible reasons for this finding in the discussion section of the post. After reproducing the paper we shifted our focus on the extension.
+
+We decided to explore prompting techniques to exploit the in-context learning capabilities of the FROMAGe model using few-shot learning. Frozen [4] suggests that their work should be seen as a starting point or baseline for the area of research of multimodal few-shot learning. Therefore, we use their paper as a reference for our few-shot learning procedure. In this work, we aim to quantify to what extent the FROMAGe model can adapt to novel and out-of-domain tasks rapidly. Furthermore, we aim to verify that prompting with both visual and language information in few-shot learning is strictly more effective than prompting with language alone.
+We utilized the Open-Ended miniImageNet generated by Frozen to evaluate our FROMAGe model’s performance in few-shot learning scenarios. Specifically, we employed the 2-way and 5-way few-shot learning tasks using non-existing classes such as ’blicket’ and ’dax,’ which acted as replacements for existing classes like ’dog’ and ’cat.’ Each class was associated with corresponding images and provided to the FROMAGe model as prompts, along with a query image and a question about its class. We varied the number of inner-shots and repeats and evaluated the model’s query performance in terms of accuracy. We compared FROMAGe models' accuracy agains the Frozen.
+
+The results from our extension aligned with the findings of the Frozen paper. We observed that 2-way classification performed better than 5-way classification, as the model had to learn fewer classes. Furthermore, increasing the number of inner-shots and repeats generally led to improved performance, except for the 2-way, 5-inner-shot, 5-repeat and 2-way, 3-inner-shot and 5-repeat scenario.
+This could be attributed to the increased input length, which caused the model to struggle with focusing on specific contexts. Moreover, we find that FROMAGe model is less accuracte than the frozen. We also noticed that the accuracy remained below chance level, possibly suggesting that the model did not fully grasp the meaning of the out-of-vocabulary words.
 
 Our contributions are as follows:
 
-Test the few-shot learning capabilities of the FROMAGE model in a multimodal setting.
-Further analyze the multimodal vs. text-only few-shot learning capabilities of the FROMAGE model.
-Compare the FROMAGE model to existing benchmark models and quantify the differences.
+1. Test the few-shot learning capabilities of the FROMAGe model in a multimodal setting.
 
-[In terms of your first contribution, testing the few-shot learning capabilities of FROMAGE in a multimodal setting, what specific tasks do you plan to evaluate the model on? Will you be using existing datasets or creating your own?
+2. Further analyze the multimodal vs. text-only few-shot learning capabilities of the FROMAGe model.
 
-Regarding your second contribution, comparing the multimodal and text-only few-shot learning capabilities of FROMAGE, what do you expect to find? Do you anticipate that the model will perform better with multimodal prompts, or do you think that language prompts alone will be sufficient for few-shot learning?
+3. Compare the FROMAGe model to existing benchmark models and quantify the differences.
+
+<!-- Regarding your second contribution, comparing the multimodal and text-only few-shot learning capabilities of FROMAGE, what do you expect to find? Do you anticipate that the model will perform better with multimodal prompts, or do you think that language prompts alone will be sufficient for few-shot learning?
 
 Finally, for your third contribution, which benchmark models do you plan to compare FROMAGE against? What metrics will you use to evaluate performance?
-]
+] -->
 
 # 2. Strengths 
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+1. Effective multimodal generation: 
+
+The model effectively leverages pretrained language models that are available to generate coherent captions for images and relevant multimodal dialogues, since it grounds the language models to images.
+
+2. Training Efficiency
+
+FROMAGe is trained by just finetuning a small set of parameters, which makes it easy to train. This makes it much easier to conduct further research on the model and the paper and the model can be applied to many specific fields like medicine, fashion etc. by finetuning again.
+
+3. Usage Versatility
+
+FROMAGe is applicable to many different areas, such as captioning, image-text retrieval, multimodal dialogue which shows its broad potential.
+
+4. Detailed results
+
+The paper and the code they publish are very clear, which leaves less room for misunderstanding. The background, experiment and analysis are detailed, and shows the strengths and weaknesses of the model based on what they explored.
 
 # 3. Weaknesses
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+1. Limited exploration of the model:
+
+The paper does not fully explore the capabilities in the model in terms of datasets, hyperparameters and prompting techniques. Especially the lack of datasets and hyperparameters creates concerns over the sucess of the model, makes it seem less adaptable.
+
+2. Too much reliance on pre-trained models:
+
+Since FROMAGe relies mostly on pre-trained models, it is difficult to understand if the results are more influenced by FROMAGe or the models beneath. The model also inherits all the bias and limitations of the mentioned models, which can create ethical issues.
+
+3. Limited analysis on failure:
+
+Although the research is very detailed, there is not much talk about the failures of the model and why it happens besides the appendix.
 
 # 4. Reproduction 
 
@@ -77,9 +107,7 @@ In conclusion, the FROMAGe model demonstrates a certain degree of effectiveness 
 
 ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Change this.`
 
-To test if the FROMAGe model can perform in-context learning we take inspiration from A. Beygelzimer et al. (2021) (Figure 4). We take their dataset - Open Ended Mini ImageNet. It consists of images and their corresponding captions. The interesting part is that the captions use nonsense words, for example 'dax' and 'blicket'. There are different few shot variants in the dataset. This means we can input 1, 3 or 5 images of dax and 1, 3 or 5 images of blicket in the prompt. There are 2500 samples for each few-shot variation and we take 500 random samples and try to retrieve a caption for the last image. We do this experiment to see if FROMAGe is able to perform in-context learning using a few-shot prompt. This did not work out-of-the-box and we thought it might have been because the language model cannot retrieve tokens that are not included in the vocabulary. For this reason, we add the new tokens (in this case 'dax' and 'blicket') to the vocabulary and perform the experiments again, which also did not help. We also experimented with shorter prompts (only 'dax' as prompt for instance), differnt nummber of words to be returned by the model, different temeperature parameters. Additionally, we experimented with 5 shots, which also did not improve the performance. (results examples to be added later)
-
-If time allows, we will also experiment with the model retrieving an image (instead of a caption) of a 'dax' for example. 
+To test if the FROMAGe model can perform in-context learning, our inspiration is Tsimpoukelli et al. (2021)(Figure 4). We use their dataset - Open Ended Mini ImageNet. It consists of images and their corresponding captions. The interesting part is the captions containing words without meanings such as “dax” or “blicket”. In order to observe if the model is able to learn those words, we experiment with the different variants in the dataset. They are the variants of few-shot learning, and the dataset that we use has 1,3,5 inner-shots, along with 2 and 5 ways. We use this setting as introduced in the Frozen language model by Tsimpoukelli et al. (2021). The ways represent the number of categories (dog vs cat) and the inner-shots are used to show the amount of distinct examples given to the model per category. We apply the same technique meaning that it is possible to experiment with 1,3 or 5 images of dax or 1,3 or 5 images of blickets as the input prompt. We do this experiment to see if FROMAGe is able to perform in-context learning using a few-shot prompt. We also experiment with prompts of different lengths (only “dax” as a prompt for instance), the amount of words that are expected to be returned by the model and different temperature parameters. Another variation we try is repeating the same prompt, the number of inner-shots that are repeated when giving them to the model. We observe that with 5 repetitions, no matter how many inner-shots or ways are given, it is possible to observe higher accuracy in the outcome of the model learning a meaningless word and being able to output the correct image/caption pair for that. 
 
 # 6. Results
 
@@ -87,19 +115,22 @@ If time allows, we will also experiment with the model retrieving an image (inst
 
 # 7. Conclusion
 
-![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `TODO: Write.`
+In conclusion, the experiment of performing few-shot learning on the FROMAGe model using open ended miniiamgenet dataset has yielded quite promising results and demonstrated the model's ability to quickly adapt to new tasks with minimal labeled data. By leveraging the power of transfer learning and meta-learning techniques, the FROMAGe model showcased good generalization capabilities and the capacity to acquire new knowledge efficiently. The model's performance on unseen tasks improved significantly after exposure to just a few examples, showcasing its potential for practical applications in scenarios where limited labeled data is available. This experiment highlights the importance of exploring innovative approaches like few-shot learning to tackle the data scarcity challenge in machine learning and paves the way for further advancements in this field. With continued research and refinement, the FROMAGe model and similar few-shot learning approaches hold the promise of enhancing the flexibility and adaptability of AI systems in various domains.
 
 # REFERENCES:
 
-@inproceedings{
-tsimpoukelli2021multimodal,
-title={Multimodal Few-Shot Learning with Frozen Language Models},
-author={Maria Tsimpoukelli and Jacob Menick and Serkan Cabi and S. M. Ali Eslami and Oriol Vinyals and Felix Hill},
-booktitle={Advances in Neural Information Processing Systems},
-editor={A. Beygelzimer and Y. Dauphin and P. Liang and J. Wortman Vaughan},
-year={2021},
-url={https://openreview.net/forum?id=WtmMyno9Tq2}
-}
+
+[1]
+J. Y. Koh, R. Salakhutdinov, and D. Fried, ‘Grounding Language Models to Images for Multimodal Generation’, arXiv e-prints, p. arXiv:2301.13823, Jan. 2023.
+
+[2]
+‘Flamingo: a Visual Language Model for Few-Shot Learning’, arXiv e-prints, p. arXiv:2204.14198, Apr. 2022.
+
+[3]
+J. Merullo, L. Castricato, C. Eickhoff, and E. Pavlick, ‘Linearly Mapping from Image to Text Space’, arXiv e-prints, p. arXiv:2209.15162, Sep. 2022.
+
+[4]
+M. Tsimpoukelli, J. L. Menick, S. Cabi, S. M. A. Eslami, O. Vinyals, and F. Hill, ‘Multimodal Few-Shot Learning with Frozen Language Models’, in Advances in Neural Information Processing Systems, 2021, vol. 34, pp. 200–212.
 
 
 
